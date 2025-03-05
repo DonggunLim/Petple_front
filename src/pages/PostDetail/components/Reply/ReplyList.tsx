@@ -38,6 +38,7 @@ const ReplyList = ({ comment, replies, isEditable }: ReplyListProps) => {
     initState();
     resetForm();
   };
+
   return (
     <>
       <Accordion.Root
@@ -61,6 +62,7 @@ const ReplyList = ({ comment, replies, isEditable }: ReplyListProps) => {
                   <Avartar
                     image={reply.profileImage}
                     className={styles.avatar}
+                    creator={reply}
                   />
                   <div className={styles.main_wrapper}>
                     <p>
