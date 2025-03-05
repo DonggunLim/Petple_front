@@ -166,6 +166,7 @@ const UserProfileForm = () => {
   const handlePrevProfile = () => {
     setUpdating(false);
     setPreviewImg(userImage || "");
+    setSelectedAddress(userAddress! || "");
     reset({
       nickName: userNickName || "",
     });
