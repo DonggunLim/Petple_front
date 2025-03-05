@@ -79,12 +79,13 @@ const PostHeader = (
       qc.invalidateQueries({ queryKey: ["userPosts"] });
     },
   });
-
   return (
     <div className={styles.post_header}>
-      <button className={styles.back_button} onClick={() => navigate(-1)}>
-        <img src="/images/prev.png" alt="뒤로가기 버튼" />
-      </button>
+      {location.pathname.includes("post") && (
+        <button className={styles.back_button} onClick={() => navigate(-1)}>
+          <img src="/images/prev.png" alt="뒤로가기 버튼" />
+        </button>
+      )}
       <div className={styles.post_header_top}>
         <Avartar
           image={creator.profileImage}
