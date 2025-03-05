@@ -69,7 +69,7 @@ const PetWalk = () => {
 
   const startTracking = () => {
     if (!userId) {
-      toast({ type: "ERROR", description: "로그인이 필요합니다." });
+      toast({ type: "INFO", description: "로그인이 필요합니다." });
       navigate("/login");
       return;
     }
@@ -122,7 +122,7 @@ const PetWalk = () => {
 
   const stopTracking = () => {
     if (!userId) {
-      toast({ type: "ERROR", description: "로그인이 필요합니다." });
+      toast({ type: "INFO", description: "로그인이 필요합니다." });
       return;
     }
 
@@ -169,7 +169,7 @@ const PetWalk = () => {
   const handleClickList = () => {
     if (!userId) {
       // alert("로그인이 필요합니다.");
-      toast({ type: "ERROR", description: "로그인이 필요합니다." });
+      toast({ type: "INFO", description: "로그인이 필요합니다." });
       navigate("/login");
       return;
     }
@@ -229,7 +229,9 @@ const PetWalk = () => {
       <div className={styles.description}>
         <span className={styles.description_span}>사용방법: </span>
         <ul className={styles.description_list}>
-          <li style={{color:"red", fontWeight:"bold"}}>1️⃣ 정확한 기록을 위해 모바일 버전에서 사용해주세요.📱</li>
+          <li style={{ color: "red", fontWeight: "bold" }}>
+            1️⃣ 정확한 기록을 위해 모바일 버전에서 사용해주세요.📱
+          </li>
           <li>2️⃣ 현재 위치에서 시작 버튼을 눌러주세요.</li>
           <li>3️⃣ 반려동물과 함께 산책을 다니시면 돼요.</li>
           <li>
