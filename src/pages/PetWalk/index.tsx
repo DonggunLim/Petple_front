@@ -229,14 +229,15 @@ const PetWalk = () => {
       <div className={styles.description}>
         <span className={styles.description_span}>사용방법: </span>
         <ul className={styles.description_list}>
-          <li>1️⃣ 현재 위치에서 시작 버튼을 눌러주세요.</li>
-          <li>2️⃣ 반려동물과 함께 산책을 다니시면 돼요.</li>
+          <li style={{color:"red", fontWeight:"bold"}}>1️⃣ 정확한 기록을 위해 모바일 버전에서 사용해주세요.📱</li>
+          <li>2️⃣ 현재 위치에서 시작 버튼을 눌러주세요.</li>
+          <li>3️⃣ 반려동물과 함께 산책을 다니시면 돼요.</li>
           <li>
             <span className={styles.description_p_span}>
               🌱 종료되지 않게 주의해주세요.
             </span>
           </li>
-          <li>3️⃣ 산책이 완료되면 종료 버튼을 눌러주세요.</li>
+          <li>4️⃣ 산책이 완료되면 종료 버튼을 눌러주세요.</li>
         </ul>
       </div>
     </div>
