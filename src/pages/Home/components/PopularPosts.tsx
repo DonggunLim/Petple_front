@@ -36,6 +36,7 @@ const PopularPosts = () => {
               <img
                 src={post.images[0] || "/images/loadingImage.svg"}
                 alt="게시물 대표 이미지"
+                loading="lazy"
               />
             </div>
             <div className={styles.post_item_info}>
