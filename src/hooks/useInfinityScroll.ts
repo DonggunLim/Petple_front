@@ -27,7 +27,9 @@ const useInfinityScroll = ({ cb, observerOptions }: UseInfinityScrollProps) => {
     observer.observe(targetRef.current);
 
     return () => {
-      observer.disconnect();
+      if (targetRef.current) {
+        observer.unobserve(targetRef.current);
+      }
     };
   }, [observerCallback]);
 
