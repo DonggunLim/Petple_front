@@ -71,7 +71,7 @@ const Map: FC<MapProps> = ({ locations = [] }) => {
   };
 
   useEffect(() => {
-    if (!isSuccess || typeof window === "undefined") return;
+    if (!isSuccess) return;
 
     const { kakao } = window;
     if (!kakao?.maps) return;

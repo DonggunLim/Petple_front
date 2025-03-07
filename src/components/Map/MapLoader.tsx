@@ -12,6 +12,10 @@ const loadKakaoMap = async (): Promise<boolean> => {
   try {
     const scriptUrl = await fetchKakaoMapScriptUrl();
 
+    if (typeof window === "undefined") {
+      return false;
+    }
+
     return new Promise((resolve, reject) => {
       if (window.kakao && window.kakao.maps) {
         resolve(true);
@@ -39,6 +43,7 @@ const loadKakaoMap = async (): Promise<boolean> => {
 
 // 클린업 추가
 const cleanupKakaoScript = () => {
+  if (typeof window === "undefined") return;
   const script = document.getElementById(KAKAO_MAP_SCRIPT_ID);
   if (script) {
     document.head.removeChild(script);
@@ -50,6 +55,7 @@ const useKakaoLoader = () => {
     queryKey: ["kakaoMap"],
     queryFn: loadKakaoMap,
     staleTime: 7 * 24 * 60 * 60 * 1000,
+    enabled: typeof window !== "undefined",
   });
 
   return { ...query, cleanup: cleanupKakaoScript };
