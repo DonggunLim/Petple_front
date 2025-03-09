@@ -1,50 +1,53 @@
-# React + TypeScript + Vite
+# 🐾 PetPle
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+**PetPle**은 반려동물이라는 공통 관심사를 가진 사용자들을 위한 커뮤니티 및 다양한 서비스를 제공하는 웹 애플리케이션으로, 프론트엔드와 백엔드를 직접 설계하고 구현한 풀스택 프로젝트입니다.
 
-Currently, two official plugins are available:
+## 🚀 기술 스택
+### Frontend
+- React
+- TypeScript
+- Zustand
+- TanStack Query
+- React-Hook-Form
+- Zod
+- Axios
+- Socket.io-client
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+### Backend
+- Node.js
+- Express
+- MongoDB
+- Mongoose
+- Socket.io
 
-## Expanding the ESLint configuration
+### DevOps
+- Docker
+- Nginx
+- GitLab Runner
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+## 📌 주요 기능
+### ✅ 커뮤니티 기능 (게시판, 좋아요, 댓글)
+- **Context API와 Compound Pattern을 활용한 UI 공통 컴포넌트 설계 및 개발**
+- **Intersection Observer API를 활용한 useInfiniteQuery 기반 무한스크롤 기능 구현**
+- **tanstack-query를 활용한 데이터 캐싱 및 상태 동기화 최적화**
 
-- Configure the top-level `parserOptions` property like this:
+### ✅ 실시간 채팅 기능
+- **Kakao Map API와 MongoDB GeoJSON을 활용한 위치 기반 데이터 처리**
+- **Socket.io를 이용한 실시간 채팅 구현**
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+### ✅ 배포
+- **GitLab Runner + Docker 기반 CI/CD 구축**
+- **Nginx를 활용한 프론트엔드 및 백엔드 배포**
+
+## 📌 프로젝트 링크
+- **Frontend Repository**: [PetPle Frontend](https://github.com/DonggunLim/Petple_front)
+- **Backend Repository**: [PetPle Backend](https://github.com/DonggunLim/Petple_back)
+
+## 📌 설치 및 실행 방법
+
+### 프론트엔드 실행
+```bash
+npm install
+npm run dev
 ```
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
-
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
-
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
