@@ -35,7 +35,8 @@ const CommunityPost = ({ post }: PostProps) => {
                 <Carousel.Item key={index} index={index}>
                   <div className={styles.post_image_container}>
                     <img
-                      src={src}
+                      src={src?.replace("images", "resized/images")}
+                      onError={(e) => (e.currentTarget.src = src)}
                       alt="게시글 이미지"
                       key={index}
                       className={styles.post_image}

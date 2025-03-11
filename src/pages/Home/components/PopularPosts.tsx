@@ -19,6 +19,7 @@ const PopularPosts = () => {
     queryKey: ["PopularPosts"],
     queryFn: getPopularPost,
   });
+
   return (
     <section className={styles.wrapper}>
       <h1 className={styles.title}>
@@ -34,7 +35,12 @@ const PopularPosts = () => {
             <div className={styles.rank}>{convertRankToEmoji(key + 1)}</div>
             <div className={styles.post_item_img_container}>
               <img
-                src={post.images[0] || "/images/loadingImage.svg"}
+                src={
+                  post.images.length === 0
+                    ? "/images/loadingImage.svg"
+                    : post.images[0]?.replace("images", "resized/images")
+                }
+                onError={(e) => (e.currentTarget.src = post.images[0])}
                 alt="게시물 대표 이미지"
                 loading="lazy"
               />
