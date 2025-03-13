@@ -50,11 +50,13 @@ const useChatSocket = ({
   };
 
   useEffect(() => scrollToBottom(), [messages]);
+
   useEffect(() => {
-    const socket = io(`${config.app.backendUrl}`, {
+    const socket = io(`${config.app.backendUrl}/chat`, {
       transports: ["websocket"],
       reconnectionDelayMax: 10000,
     });
+
     socketRef.current = socket;
 
     socket.on("connect", () => {
@@ -63,6 +65,10 @@ const useChatSocket = ({
 
     socket.on("receive_message", (message) => {
       setMessages((prev) => [...prev, message]);
+    });
+
+    socketRef.current.on("prev_message", (messages) => {
+      setMessages((prev) => [...prev, ...messages]);
     });
 
     socket.on("disconnect", () => setIsConnected(false));
@@ -77,7 +83,7 @@ const useChatSocket = ({
       setRoomId(roomId);
       socketRef.current.emit("join_room", roomId);
     }
-  }, [signinedUser, socketRef]);
+  }, []);
 
   return { messages, isConnected, sendMessage };
 };
