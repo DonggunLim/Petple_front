@@ -3,15 +3,17 @@ import Kakao from "@/assets/icons/btn_kakao.svg?react";
 
 const Login = () => {
   const handleGoogleLogin = () => {
-    window.location.href = "/api/oauth/google";
+    window.location.href = "https://port-0-petple-back-m88kac3b6f77b35d.sel4.cloudtype.app/api/oauth/google";
   };
 
   const handleKakaoLogin = () => {
-    window.location.href = "/api/oauth/kakao";
+    window.alert('현재 배포 상태에서는 구글 로그인만 사용가능합니다.)
+    // window.location.href = "/api/oauth/kakao";
   };
 
   const handleNaverLogin = () => {
-    window.location.href = "/api/oauth/naver";
+    window.alert('현재 배포 상태에서는 구글 로그인만 사용가능합니다.)
+    // window.location.href = "/api/oauth/naver";
   };
 
   return (
