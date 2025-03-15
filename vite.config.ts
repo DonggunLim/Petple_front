@@ -1,7 +1,7 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import path from "path";
-import removeConsole from "vite-plugin-remove-console";
+// import removeConsole from "vite-plugin-remove-console";
 import optimizeImagePlugin from "vite-plugin-optimize-image";
 import mkcert from "vite-plugin-mkcert";
 import svgr from "vite-plugin-svgr";
