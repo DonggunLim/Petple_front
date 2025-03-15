@@ -8,7 +8,7 @@ const getUserInfoLoader = async (QueryClient: QueryClient) => {
   if (!loginStatus) {
     return null;
   }
-
+  console.log("loader", loginStatus);
   try {
     const user = await QueryClient.fetchQuery({
       queryKey: ["userInfo"],
@@ -22,7 +22,7 @@ const getUserInfoLoader = async (QueryClient: QueryClient) => {
       userPet: user.pet,
       userAddress: user.address,
     });
-
+    console.log(user);
     return user;
   } catch (error) {
     return null;
