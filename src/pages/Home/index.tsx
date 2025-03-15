@@ -1,4 +1,4 @@
-import { Suspense } from "react";
+import { Suspense, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "./home.module.css";
 import carouselData from "@/consts/mainBannerData";
@@ -11,7 +11,9 @@ import { Loading } from "@/components";
 
 const Home = () => {
   const navigate = useNavigate();
-  console.log('home')
+  useEffect(() => {
+    console.log("home useEffect 실행됨");
+  }, []);
   return (
     <div className={styles.homewrapper}>
       <div className={styles.container}>
@@ -49,7 +51,7 @@ const Home = () => {
           <Carousel.Indicator />
         </Carousel>
 
-        <Menu menuList={menuList}/>
+        <Menu menuList={menuList} />
 
         <div className={styles.postSection}>
           <div
