@@ -9,7 +9,7 @@ import svgr from "vite-plugin-svgr";
 export default defineConfig({
   plugins: [
     react(),
-    removeConsole(),
+    // removeConsole(),
     optimizeImagePlugin(),
     mkcert({
       certFileName: "./localhost.pem",
