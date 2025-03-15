@@ -6,7 +6,7 @@ import HelmetMetaTags from "./HelmetMetaTags";
 
 const BaseLayout = () => {
   const { pathname: currentPath } = useLocation();
-
+  console.log({ currentPath });
   return (
     <>
       <HelmetMetaTags currentPath={currentPath} />
