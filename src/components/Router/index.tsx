@@ -41,7 +41,10 @@ const router = createBrowserRouter([
     path: "/",
     element: <BaseLayout />,
     errorElement: <ErrorPage />,
-    loader: () => getUserInfoLoader(qc),
+    loader: () => {
+      console.log("BaseLayout Loader");
+      return getUserInfoLoader(qc);
+    },
     children: [
       {
         path: "/",
@@ -204,7 +207,10 @@ const router = createBrowserRouter([
         <PostDetailPage />
       </Suspense>
     ),
-    loader: () => getUserInfoLoader(qc),
+    loader: () => {
+      console.log("community Loader");
+      return getUserInfoLoader(qc);
+    },
   },
   {
     path: "/chat/:nickname",
