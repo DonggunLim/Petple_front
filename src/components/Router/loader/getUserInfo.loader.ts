@@ -6,10 +6,10 @@ import { QueryClient } from "@tanstack/react-query";
 const getUserInfoLoader = async (QueryClient: QueryClient) => {
   console.log("Loader");
   const loginStatus = JSON.parse(getCookie("loginStatus") || "false");
+  console.log(loginStatus);
   if (!loginStatus) {
     return null;
   }
-  console.log(loginStatus);
   try {
     const user = await QueryClient.fetchQuery({
       queryKey: ["userInfo"],
