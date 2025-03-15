@@ -11,7 +11,7 @@ import { Loading } from "@/components";
 
 const Home = () => {
   const navigate = useNavigate();
-
+  console.log('home')
   return (
     <div className={styles.homewrapper}>
       <div className={styles.container}>
