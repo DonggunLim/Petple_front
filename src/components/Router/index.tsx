@@ -41,10 +41,7 @@ const router = createBrowserRouter([
     path: "/",
     element: <BaseLayout />,
     errorElement: <ErrorPage />,
-    loader: () => {
-      console.log("BaseLayout Loader");
-      return getUserInfoLoader(qc);
-    },
+    loader: () => getUserInfoLoader(qc),
     children: [
       {
         path: "/",

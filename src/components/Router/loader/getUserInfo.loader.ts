@@ -4,11 +4,12 @@ import userAuthStore from "@/zustand/userAuth";
 import { QueryClient } from "@tanstack/react-query";
 
 const getUserInfoLoader = async (QueryClient: QueryClient) => {
+  console.log("Loader");
   const loginStatus = JSON.parse(getCookie("loginStatus") || "false");
   if (!loginStatus) {
     return null;
   }
-  console.log("loader", loginStatus);
+  console.log(loginStatus);
   try {
     const user = await QueryClient.fetchQuery({
       queryKey: ["userInfo"],

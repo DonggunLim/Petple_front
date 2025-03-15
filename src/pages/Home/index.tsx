@@ -1,4 +1,4 @@
-import { Suspense, useEffect } from "react";
+import { Suspense } from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "./home.module.css";
 import carouselData from "@/consts/mainBannerData";
@@ -11,9 +11,6 @@ import { Loading } from "@/components";
 
 const Home = () => {
   const navigate = useNavigate();
-  useEffect(() => {
-    console.log("home useEffect 실행됨");
-  }, []);
   return (
     <div className={styles.homewrapper}>
       <div className={styles.container}>
