@@ -2,7 +2,10 @@ import userAuthStore from "@/zustand/userAuth";
 import axios, { AxiosError } from "axios";
 
 const baseInstance = axios.create({
-  baseURL: "/api",
+  baseURL:
+    import.meta.env.MODE === "production"
+      ? import.meta.env.VITE_API_BASE_URL
+      : "/api",
   timeout: 5000,
   headers: {
     "Content-Type": "application/json",
