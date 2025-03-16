@@ -4,7 +4,7 @@ import axios, { AxiosError } from "axios";
 const baseInstance = axios.create({
   baseURL:
     import.meta.env.MODE === "production"
-      ? import.meta.env.VITE_API_BASE_URL
+      ? `${import.meta.env.VITE_API_BASE_URL}/api`
       : "/api",
   timeout: 5000,
   headers: {
