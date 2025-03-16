@@ -10,6 +10,7 @@ const baseInstance = axios.create({
   headers: {
     "Content-Type": "application/json",
   },
+  withCredentials: true,
 });
 
 baseInstance.interceptors.response.use(
