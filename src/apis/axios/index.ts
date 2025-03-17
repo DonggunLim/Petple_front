@@ -34,6 +34,7 @@ baseInstance.interceptors.response.use(
             userImage: null,
             userPet: null,
           });
+          localStorage.clear();
 
           window.location.href = "/login";
           break;
