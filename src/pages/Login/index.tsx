@@ -9,9 +9,11 @@ const Login = () => {
   const code = searchParams.get("code");
   const navigate = useNavigate();
   const handleGoogleLogin = () => {
-    // window.location.href =
-    //   "https://port-0-petple-back-m88kac3b6f77b35d.sel4.cloudtype.app/api/oauth/google";
-    window.location.href = "/api/oauth/google";
+    const url =
+      import.meta.env.MODE === "production"
+        ? `${import.meta.env.VITE_API_BASE_URL}/api/oauth/google`
+        : "/api/oauth/google";
+    window.location.href = url;
   };
 
   const handleKakaoLogin = () => {
