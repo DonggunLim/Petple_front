@@ -1,10 +1,17 @@
+import { useEffect } from "react";
 import style from "./signup.module.css";
 import Kakao from "@/assets/icons/btn_kakao.svg?react";
+import { useNavigate, useSearchParams } from "react-router-dom";
+import { fetchGoolgeCallback } from "@/apis/login.api";
 
 const Login = () => {
+  const [searchParams] = useSearchParams();
+  const code = searchParams.get("code");
+  const navigate = useNavigate();
   const handleGoogleLogin = () => {
-    window.location.href =
-      "https://port-0-petple-back-m88kac3b6f77b35d.sel4.cloudtype.app/api/oauth/google";
+    // window.location.href =
+    //   "https://port-0-petple-back-m88kac3b6f77b35d.sel4.cloudtype.app/api/oauth/google";
+    window.location.href = "/api/oauth/google";
   };
 
   const handleKakaoLogin = () => {
@@ -16,6 +23,15 @@ const Login = () => {
     window.alert("현재 배포 상태에서는 구글 로그인만 사용가능합니다.");
     // window.location.href = "/api/oauth/naver";
   };
+
+  useEffect(() => {
+    if (!code) return;
+    fetchGoolgeCallback(code) //
+      .then(() => {
+        localStorage.loginStatus = "true";
+        navigate("/", { replace: true });
+      });
+  }, [code]);
 
   return (
     <div className={style.total_wrap}>

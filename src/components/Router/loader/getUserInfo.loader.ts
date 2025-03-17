@@ -1,12 +1,11 @@
 import { recieveUserInfo } from "@/apis/profile.api";
-import { getCookie } from "@/utils/getCookie";
 import userAuthStore from "@/zustand/userAuth";
 import { QueryClient } from "@tanstack/react-query";
 
 const getUserInfoLoader = async (QueryClient: QueryClient) => {
-  console.log("Loader");
-  const loginStatus = JSON.parse(getCookie("loginStatus") || "false");
-  console.log(loginStatus);
+  const loginStatus = JSON.parse(
+    localStorage.getItem("loginStatus") || "false"
+  );
   if (!loginStatus) {
     return null;
   }
@@ -23,7 +22,6 @@ const getUserInfoLoader = async (QueryClient: QueryClient) => {
       userPet: user.pet,
       userAddress: user.address,
     });
-    console.log(user);
     return user;
   } catch (error) {
     return null;

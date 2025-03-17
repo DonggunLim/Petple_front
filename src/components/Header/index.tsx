@@ -4,14 +4,15 @@ import userAuthStore from "@/zustand/userAuth";
 import { useQueryClient } from "@tanstack/react-query";
 import Avartar from "../UI/Avartar";
 import { logout } from "@/apis/profile.api";
-import { getCookie } from "@/utils/getCookie";
 
 const Header = () => {
   const navigate = useNavigate();
   const { userImage } = userAuthStore();
   const queryClient = useQueryClient();
 
-  const loginStatus = JSON.parse(getCookie("loginStatus") || "false");
+  const loginStatus = JSON.parse(
+    localStorage.getItem("loginStatus") || "false"
+  );
 
   const handleLogout = async () => {
     try {
@@ -26,6 +27,7 @@ const Header = () => {
           userPet: null,
         });
         queryClient.removeQueries({ queryKey: ["userInfo"] });
+        localStorage.clear();
         navigate("/login");
       }
     } catch (error) {
