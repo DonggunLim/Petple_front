@@ -3,6 +3,6 @@ export const config = {
     backendUrl:
       import.meta.env.MODE === "development"
         ? "http://localhost:3000"
-        : "https://kdt-react-2-team01.elicecoding.com",
+        : import.meta.env.VITE_API_BASE_URL,
   },
 };
