@@ -1,10 +1,10 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { lazy, Suspense } from "react";
-import BaseLayout from "@/components/Layout";
 import ProtectedRoute from "@/components/Router/components/ProtectedRoute";
 import Loading from "@/components/Loading";
 import getUserInfoLoader from "./loader/getUserInfo.loader";
 import { QueryClient } from "@tanstack/react-query";
+import BaseLayout from "./layouts/BaseLayout";
 
 const ErrorPage = lazy(() => import("@/pages/Error"));
 const HomePage = lazy(() => import("@/pages/Home"));
@@ -195,31 +195,31 @@ const router = createBrowserRouter([
           </Suspense>
         ),
       },
+      {
+        path: "/community/post/:id",
+        element: (
+          <Suspense fallback={<Loading />}>
+            <PostDetailPage />
+          </Suspense>
+        ),
+        // loader: () => {
+        //   console.log("community Loader");
+        //   return getUserInfoLoader(qc);
+        // },
+      },
+      {
+        path: "/chat/:nickname",
+        element: (
+          <ProtectedRoute>
+            <Suspense fallback={<Loading />}>
+              <ChatPage />
+            </Suspense>
+          </ProtectedRoute>
+        ),
+        // loader: () => getUserInfoLoader(qc),
+        errorElement: <ErrorPage />,
+      },
     ],
-  },
-  {
-    path: "/community/post/:id",
-    element: (
-      <Suspense fallback={<Loading />}>
-        <PostDetailPage />
-      </Suspense>
-    ),
-    loader: () => {
-      console.log("community Loader");
-      return getUserInfoLoader(qc);
-    },
-  },
-  {
-    path: "/chat/:nickname",
-    element: (
-      <ProtectedRoute>
-        <Suspense fallback={<Loading />}>
-          <ChatPage />
-        </Suspense>
-      </ProtectedRoute>
-    ),
-    loader: () => getUserInfoLoader(qc),
-    errorElement: <ErrorPage />,
   },
   {
     path: "*",
