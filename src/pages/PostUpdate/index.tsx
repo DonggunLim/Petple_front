@@ -23,7 +23,7 @@ const PostUpdatePage = () => {
   const { data: post } = useSuspenseQuery({
     queryKey: ["post", id],
     queryFn: () => id && getPostById(id),
-    staleTime: 0,
+    gcTime: 0,
   });
 
   const { mutateAsync: uploadImages } = useMutation({
