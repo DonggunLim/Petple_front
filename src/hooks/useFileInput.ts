@@ -1,3 +1,4 @@
+import resizeImage from "@/utils/resizeImage";
 import { ChangeEvent, useRef, useState } from "react";
 
 interface UseFileInputProps {
@@ -14,11 +15,13 @@ const useFileInput = ({
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [fileList, setFileList] = useState<Array<File | string>>(images ?? []);
 
-  const handleChangeFileInput = (e: ChangeEvent<HTMLInputElement>) => {
+  const handleChangeFileInput = async (e: ChangeEvent<HTMLInputElement>) => {
     if (!e.target.files) return;
-    const files = Array.from(e.target.files);
-    const updatedFiles = [...fileList, ...files];
-
+    const promises = Array.from(e.target.files).map((file) =>
+      resizeImage(file)
+    );
+    const resizedFiles = await Promise.all(promises);
+    const updatedFiles = [...fileList, ...resizedFiles];
     if (updatedFiles.length > 10) {
       setFormError?.("images", "최대 10장까지 등록할 수 있습니다.");
       return;
