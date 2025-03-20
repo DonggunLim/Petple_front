@@ -52,7 +52,7 @@ const useChatSocket = ({
   useEffect(() => scrollToBottom(), [messages]);
 
   useEffect(() => {
-    const socket = io(`${config.app.backendUrl}`, {
+    const socket = io(`${config.app.backendUrl}/chat`, {
       transports: ["websocket"],
       reconnectionDelayMax: 10000,
     });
