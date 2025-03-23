@@ -26,6 +26,8 @@ const Home = () => {
                     src={banner.image}
                     alt={banner.title}
                     className={styles.bannerImage}
+                    loading="lazy"
+                    decoding="async"
                   />
                   <div className={styles.bannerText}>
                     <span className={styles.highlight}>{banner.highlight}</span>
@@ -58,6 +60,7 @@ const Home = () => {
             <img
               className={styles.postText}
               src={"/images/pettalkBanner.png"}
+              alt="펫 커뮤니티 배너 - PET COMMUNITY"
             ></img>
           </div>
           <div className={styles.postsWrapper}>
