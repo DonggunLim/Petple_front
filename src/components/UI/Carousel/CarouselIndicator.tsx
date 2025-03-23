@@ -8,10 +8,17 @@ interface CarouselIndicatorProps {
   defaultColor?: string;
 }
 
-const CarouselIndicator: FC<CarouselIndicatorProps> = ({ className, activeColor, defaultColor }) => {
+const CarouselIndicator: FC<CarouselIndicatorProps> = ({
+  className,
+  activeColor,
+  defaultColor,
+}) => {
   const { carouselIndex, setCarouselIndex, itemLength } = useCarouselContext();
 
-  const indexes = useMemo(() => Array.from({ length: itemLength }, (_, index) => index), [itemLength]);
+  const indexes = useMemo(
+    () => Array.from({ length: itemLength }, (_, index) => index),
+    [itemLength]
+  );
 
   const carouselIndicatorCls = useMemo(() => {
     return `${styles.carouselIndicator} ${className || ""}`.trim();
@@ -21,9 +28,13 @@ const CarouselIndicator: FC<CarouselIndicatorProps> = ({ className, activeColor,
     <div className={carouselIndicatorCls}>
       {indexes.map((index) => (
         <button
+          aria-label={`carousel ${index + 1} 이동 버튼`}
           key={index}
           className={index === carouselIndex ? styles.active : ""}
-          style={{ backgroundColor: index === carouselIndex ? activeColor : defaultColor }}
+          style={{
+            backgroundColor:
+              index === carouselIndex ? activeColor : defaultColor,
+          }}
           onClick={() => setCarouselIndex(index)}
         />
       ))}
