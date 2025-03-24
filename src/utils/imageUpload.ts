@@ -4,7 +4,7 @@ import axios from "axios";
 export const imageUpload = async (file: File) => {
   try {
     const presignedUrl = await getPresignedUrl({
-      fileName: `${file.name}-${Date.now()}`,
+      fileName: `${file.name}`,
       fileType: file.type,
     });
     const response = await axios.put(presignedUrl, file, {
