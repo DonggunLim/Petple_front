@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import ClockIcon from "@/assets/icons/clock.svg?react";
 import LikeIcon from "@/assets/icons/like.svg?react";
 import CommentIcon from "@/assets/icons/comment.svg?react";
+import { convertImageSrc } from "@/types/convertImageSrc";
 
 const rankEmojis = ["🥇", "🥈", "🥉"];
 
@@ -35,14 +36,11 @@ const PopularPosts = () => {
             <div className={styles.rank}>{convertRankToEmoji(key + 1)}</div>
             <div className={styles.post_item_img_container}>
               <img
-                src={
-                  post.images.length === 0
-                    ? "/images/loadingImage.svg"
-                    : post.images[0]?.replace("images", "resized/images")
-                }
+                src={convertImageSrc(post.images[0], "thumbnail", "70x70")}
                 onError={(e) => (e.currentTarget.src = post.images[0])}
                 alt="게시물 대표 이미지"
                 loading="lazy"
+                decoding="async"
               />
             </div>
             <div className={styles.post_item_info}>

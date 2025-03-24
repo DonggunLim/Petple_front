@@ -9,6 +9,7 @@ import userAuthStore from "@/zustand/userAuth";
 import ClockIcon from "@/assets/icons/clock.svg?react";
 import LikeIcon from "@/assets/icons/like.svg?react";
 import CommentIcon from "@/assets/icons/comment.svg?react";
+import { convertImageSrc } from "@/types/convertImageSrc";
 
 interface PostProps {
   post: PostItem;
@@ -16,7 +17,6 @@ interface PostProps {
 
 const CommunityPost = ({ post }: PostProps) => {
   const { creator, images, tags, createdAt, _id, comments, likes } = post;
-
   return (
     <>
       <div key={`post-item-${_id}`} className={styles.post}>
@@ -35,11 +35,13 @@ const CommunityPost = ({ post }: PostProps) => {
                 <Carousel.Item key={index} index={index}>
                   <div className={styles.post_image_container}>
                     <img
-                      src={src?.replace("images", "resized/images")}
+                      src={convertImageSrc(src, "resized", "360x450")}
                       onError={(e) => (e.currentTarget.src = src)}
                       alt="게시글 이미지"
                       key={index}
                       className={styles.post_image}
+                      loading="lazy"
+                      decoding="async"
                     />
                   </div>
                 </Carousel.Item>
