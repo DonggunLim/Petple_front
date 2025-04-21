@@ -75,14 +75,16 @@ const PostForm = ({
           name="tags"
           control={control}
           defaultValue={[]}
-          render={({ field }) => (
-            <>
-              <ChipInput {...field} values={post?.tags} />
-              {errors.tags && (
-                <p className={styles.error}>{errors.tags.message}</p>
-              )}
-            </>
-          )}
+          render={({ field: { onChange } }) => {
+            return (
+              <>
+                <ChipInput onChange={onChange} values={post?.tags} />
+                {errors.tags && (
+                  <p className={styles.error}>{errors.tags.message}</p>
+                )}
+              </>
+            );
+          }}
         />
         <input
           type="file"
