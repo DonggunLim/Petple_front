@@ -18,7 +18,7 @@ const Input: FC<InputProps> = ({
   };
 
   const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === "Enter") {
+    if (e.key === "Enter" && !e.nativeEvent.isComposing) {
       e.preventDefault();
       if (!isValidInput(value)) {
         setValue("");
