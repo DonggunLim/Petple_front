@@ -1,26 +1,22 @@
 import userAuthStore from "@/zustand/userAuth";
 import style from "./menu.module.css";
 import { useNavigate } from "react-router-dom";
-import { getCookie } from "@/utils/getCookie";
-import { useEffect, useState } from "react";
+import { useMemo } from "react";
 // import profileImg from "/images/profile.png";
 import { Button } from "@/components";
 import { logout } from "@/apis/profile.api";
 
 const Menu = () => {
-  const { userImage, userNickName } = userAuthStore();
-  const [isLoggined, setIsLoggined] = useState<boolean>();
+  const user = userAuthStore();
+  const { userImage, userNickName } = user;
+  const isLoggined = useMemo(() => {
+    return user.userId !== null;
+  }, [user.userId]);
   const navigate = useNavigate();
-
-  useEffect(() => {
-    const loginStatus = JSON.parse(getCookie("loginStatus") || "false");
-    setIsLoggined(loginStatus);
-  }, []);
 
   const handleLogout = async () => {
     try {
       const response = await logout();
-
       if (response) {
         userAuthStore.setState({
           userId: null,
