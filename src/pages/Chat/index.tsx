@@ -1,5 +1,4 @@
 import styles from "./chat.module.css";
-import Header from "@/components/Header";
 import ChatInput from "./components/ChatInput";
 import ChatList from "./components/ChatList";
 import useChatSocket from "./hooks/useChatSocket";
@@ -35,7 +34,6 @@ const ChatPage = () => {
             content={`${targetUser?.nickname}님과 실시간 채팅을 즐겨보세요.!`}
           />
         </Helmet>
-        <Header />
         <div className={styles.chat_header}>
           <div
             className={styles.back_button}
