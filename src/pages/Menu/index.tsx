@@ -64,7 +64,7 @@ const Menu = () => {
 
       <div className={style.menuList}>
         <div className={style.subject}>
-          <p>커뮤니티케이션 ＞</p>
+          <h3>커뮤니티케이션</h3>
           <div>
             <a>
               <span onClick={() => navigate("/petfriends")}>💬 펫프렌즈</span>
@@ -75,7 +75,7 @@ const Menu = () => {
           </div>
         </div>
         <div className={style.subject}>
-          <p>산책 ＞</p>
+          <h3>산책</h3>
           <div>
             <a>
               <span onClick={() => navigate("/petwalk")}>👣 산책 기록</span>
@@ -83,7 +83,7 @@ const Menu = () => {
           </div>
         </div>
         <div className={style.subject}>
-          <p>정보 ＞</p>
+          <h3>정보</h3>
           <div>
             <a>
               <span onClick={() => navigate("/petmedi")}>🩺 병원/ 💊 약국</span>
@@ -102,7 +102,7 @@ const Menu = () => {
           </div>
         </div>
         <div className={style.subject}>
-          <p>이벤트 ＞</p>
+          <h3>이벤트</h3>
           <div>
             <a onClick={() => navigate("/roulette")}>
               <span>🎡 펫네임룰렛</span>
