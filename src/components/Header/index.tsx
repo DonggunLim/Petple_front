@@ -4,6 +4,7 @@ import userAuthStore from "@/zustand/userAuth";
 import { useQueryClient } from "@tanstack/react-query";
 import Avartar from "../UI/Avartar";
 import { logout } from "@/apis/profile.api";
+import AlarmDropdown from "../UI/Dropdown/AlarmDropdown";
 
 const Header = () => {
   const navigate = useNavigate();
@@ -59,6 +60,9 @@ const Header = () => {
                   image={userImage!}
                   className={style.avartar}
                 />
+              </li>
+              <li>
+                <AlarmDropdown />
               </li>
             </>
           ) : (

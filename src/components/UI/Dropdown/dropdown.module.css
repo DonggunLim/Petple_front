@@ -1,0 +1,94 @@
+.trigger {
+  all: unset;
+  position: relative;
+  padding: 0.5rem;
+  border-radius: 9999px;
+  transition: background-color 0.2s ease;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.trigger:hover {
+  background-color: #f3f4f6; /* gray-100 */
+}
+
+.icon {
+  width: 24px;
+  height: 24px;
+  color: #4b5563; /* gray-600 */
+}
+
+.badge {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  background-color: #ef4444; /* red-500 */
+  color: white;
+  font-size: 0.75rem;
+  width: 10px;
+  height: 10px;
+  padding: 2px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 9999px;
+  font-weight: bold;
+}
+
+/* 드롭다운 컨텐츠 */
+.dropdown_content {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  width: 180px;
+  background-color: #ffffff;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  z-index: 1000;
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
+  margin-top: 4px;
+}
+
+.dropdown_container {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.item {
+  display: flex;
+  padding: 6px 8px;
+  align-items: flex-start;
+  gap: 0.5rem;
+  border-radius: 0.375rem;
+  transition: background-color 0.2s ease;
+  cursor: pointer;
+}
+
+.item:hover {
+  background-color: #f3f4f6;
+}
+
+.dot {
+  align-self: center;
+  width: 8px;
+  height: 8px;
+  background-color: #3b82f6;
+  border-radius: 9999px;
+  flex-shrink: 0;
+}
+
+.dot.read {
+  background-color: #e4e4e4;
+}
+
+.text {
+  font-size: 10px;
+  line-height: 1.2;
+}
+
+.sender {
+  font-weight: 600;
+}
