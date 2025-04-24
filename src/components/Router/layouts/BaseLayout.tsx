@@ -12,6 +12,7 @@ const BaseLayout = () => {
     () => simpleLayoutPath.some((path) => currentPath.startsWith(path)),
     [currentPath]
   );
+
   return (
     <>
       <HelmetMetaTags currentPath={currentPath} />
