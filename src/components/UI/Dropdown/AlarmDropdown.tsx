@@ -8,7 +8,7 @@ import { useNavigate } from "react-router-dom";
 import { AlarmType } from "@/types/alarm.type";
 import { updateAlarmRead, deleteAlarm } from "@/apis/alarm.api";
 import useToast from "../Toast/hooks/useToast";
-
+import Avartar from "../Avartar";
 const AlarmDropdown = () => {
   const {
     alarmList,
@@ -83,11 +83,21 @@ const AlarmDropdown = () => {
                       .slice(0, 10)
                       .replaceAll("-", ".")}{" "}
                   </p>
-                  <p className={styles.text}>
-                    <span className={styles.sender}>{alarm.from.nickName}</span>{" "}
-                    님으로부터 메시지가 도착하였습니다.
-                  </p>
-                  <p className={styles.content}>{alarm.content}</p>
+                  <div className={styles.text_main}>
+                    <Avartar
+                      image={alarm.from.profileImage}
+                      className={styles.avartar}
+                    />
+                    <div>
+                      <p className={styles.text}>
+                        <span className={styles.sender}>
+                          {alarm.from.nickName}
+                        </span>{" "}
+                        님으로부터 메시지가 도착하였습니다.
+                      </p>
+                      <p className={styles.content}>{alarm.content}</p>
+                    </div>
+                  </div>
                 </div>
                 <button
                   className={styles.close_icon_container}

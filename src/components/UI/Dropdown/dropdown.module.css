@@ -99,7 +99,7 @@
 
 .text {
   font-size: 10px;
-  line-height: 1.2;
+  line-height: 1.4;
 }
 
 .sender {
@@ -114,6 +114,7 @@
 }
 
 .content {
+  margin-left: 4px;
   font-size: 10px;
   line-height: 1.1;
   color: #64748b;
@@ -170,4 +171,13 @@
 .empty_alarm_text {
   font-size: 12px;
   color: #64748b;
+}
+
+.text_main {
+  display: flex;
+  gap: 4px;
+}
+
+.avartar {
+  align-self: flex-start;
 }

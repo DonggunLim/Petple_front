@@ -38,7 +38,7 @@ const Avartar: FC<AvartarProps> = (props) => {
       <a onClick={onClick || handleAvatarClick} className={style.a}>
         <img
           src={profileImage || image || "/images/profile.png"}
-          className={className || style.image}
+          className={`${style.image} ${className}`}
           alt={alt || "프로필 이미지"}
         />
       </a>
