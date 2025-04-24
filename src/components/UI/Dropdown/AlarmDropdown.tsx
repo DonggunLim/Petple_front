@@ -4,7 +4,7 @@ import AlaramIcon from "@/assets/icons/alarm_icon.svg?react";
 import CloseIcon from "@/assets/icons/close.svg?react";
 import { useMemo } from "react";
 import { useAlarmStore } from "@/zustand/alarmStore";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { AlarmType } from "@/types/alarm.type";
 import { updateAlarmRead, deleteAlarm } from "@/apis/alarm.api";
 import useToast from "../Toast/hooks/useToast";
@@ -15,6 +15,7 @@ const AlarmDropdown = () => {
     deleteAlarm: deleteAlarmStore,
     updateAlarm: updateAlarmStore,
   } = useAlarmStore();
+  const { pathname: currentPath } = useLocation();
   const navigate = useNavigate();
   const { toast } = useToast();
 
@@ -38,6 +39,9 @@ const AlarmDropdown = () => {
     } catch (error) {
       toast({ type: "ERROR", description: "알림 업데이트 실패하였습니다." });
     } finally {
+      if (decodeURIComponent(currentPath) === `/chat/${alarm.from.nickName}`) {
+        return;
+      }
       navigate(`/chat/${alarm.from.nickName}`);
     }
   };
