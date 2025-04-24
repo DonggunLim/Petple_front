@@ -8,15 +8,18 @@ const mapTypeToIcon = {
   INFO: InfoIcon,
   SUCCESS: SuccessIcon,
   ERROR: ErrorIcon,
+  NONE: null,
 };
 
 const Description = ({ children, type = "INFO" }: DescriptionProps) => {
   const IconComponent = mapTypeToIcon[type];
   return (
     <div className={styles.toast_description}>
-      <div className={styles.toast_icon}>
-        <IconComponent />
-      </div>
+      {IconComponent && (
+        <div className={styles.toast_icon}>
+          <IconComponent />
+        </div>
+      )}
       <div>{children}</div>
     </div>
   );
