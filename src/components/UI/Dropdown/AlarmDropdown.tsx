@@ -33,6 +33,9 @@ const AlarmDropdown = () => {
   );
 
   const handleAlarmClick = async (alarm: AlarmType) => {
+    if (alarm.isRead) {
+      return;
+    }
     try {
       await updateAlarmRead(alarm.uid);
       updateAlarmStore({ ...alarm, isRead: true });
