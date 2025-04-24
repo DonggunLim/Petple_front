@@ -53,7 +53,6 @@ const AlarmDropdown = () => {
       });
     }
   };
-
   return (
     <>
       <Dropdown.Root>
@@ -70,12 +69,12 @@ const AlarmDropdown = () => {
               </p>
             </div>
             {sortedAlarmList.map((alarm) => (
-              <li
+              <Dropdown.Item
+                key={alarm.uid}
                 className={`${styles.item} ${alarm.isRead && styles.read}`}
                 onClick={() => {
                   handleAlarmClick(alarm);
                 }}
-                key={alarm.uid}
               >
                 <div className={styles.text_container}>
                   <p className={styles.date}>
@@ -92,13 +91,14 @@ const AlarmDropdown = () => {
                 </div>
                 <button
                   className={styles.close_icon_container}
-                  onClick={() => {
+                  onClick={(e) => {
+                    e.stopPropagation();
                     handleDeleteAlarm(alarm);
                   }}
                 >
                   <CloseIcon className={styles.close_icon} />
                 </button>
-              </li>
+              </Dropdown.Item>
             ))}
             {sortedAlarmList.length === 0 && (
               <li className={styles.empty_alarm}>

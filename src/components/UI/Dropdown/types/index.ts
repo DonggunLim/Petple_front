@@ -10,7 +10,9 @@ export type DropdownContextProps = {
 interface BaseProps extends PropsWithChildren {
   className?: string;
 }
-
 export interface RootProps extends BaseProps {}
 export interface TriggerProps extends BaseProps {}
 export interface ContentProps extends BaseProps {}
+export interface ItemProps extends BaseProps {
+  onClick?: () => void;
+}

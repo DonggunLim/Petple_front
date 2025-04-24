@@ -1,6 +1,5 @@
 import { createContext, useContext, useState, FC, useRef } from "react";
-import type { DropdownContextProps } from "../types";
-import type { RootProps } from "../../ChipInput/types";
+import type { DropdownContextProps, RootProps } from "../types";
 
 const DropdownContext = createContext<DropdownContextProps | null>(null);
 
@@ -14,8 +13,7 @@ export const useDropdownContext = () => {
 
 const Root: FC<RootProps> = ({ children }) => {
   const triggerRef = useRef<HTMLButtonElement>(null);
-
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState<boolean>(false);
   const toggleOpen = () => {
     setOpen((prev) => !prev);
   };
