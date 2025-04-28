@@ -1,7 +1,7 @@
-import { PropsWithChildren } from "react";
+import { PropsWithChildren, ReactNode } from "react";
 
 interface BaseProps extends PropsWithChildren {}
-export type ToastAlertType = "INFO" | "SUCCESS" | "ERROR";
+export type ToastAlertType = "INFO" | "SUCCESS" | "ERROR" | "NONE";
 export type ToastPositionType =
   | "top-right"
   | "bottom-right"
@@ -10,7 +10,7 @@ export type ToastPositionType =
   | "top-middle";
 export type ToastType = {
   title?: string;
-  description: string;
+  description: string | ReactNode;
   type?: ToastAlertType;
   position?: ToastPositionType;
   time?: number;

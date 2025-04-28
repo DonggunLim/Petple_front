@@ -33,7 +33,7 @@
   width: 70px;
 }
 
-.total_wrap ul {
+.total_wrap > .content > ul {
   display: flex;
   gap: 10px;
   align-items: center;
@@ -41,7 +41,7 @@
   justify-content: flex-end;
 }
 
-.total_wrap ul li {
+.total_wrap > .content > ul > li {
   font-size: 10px;
   align-items: center;
   display: flex;

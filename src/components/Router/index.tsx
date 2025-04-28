@@ -202,10 +202,6 @@ const router = createBrowserRouter([
             <PostDetailPage />
           </Suspense>
         ),
-        // loader: () => {
-        //   console.log("community Loader");
-        //   return getUserInfoLoader(qc);
-        // },
       },
       {
         path: "/chat/:nickname",
@@ -216,7 +212,6 @@ const router = createBrowserRouter([
             </Suspense>
           </ProtectedRoute>
         ),
-        // loader: () => getUserInfoLoader(qc),
         errorElement: <ErrorPage />,
       },
     ],

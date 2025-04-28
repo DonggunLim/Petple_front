@@ -53,6 +53,10 @@ const useChatSocket = ({
 
   useEffect(() => {
     const socket = io(`${config.app.backendUrl}/chat`, {
+      query: {
+        userId: signinedUser.userId,
+        nickname: signinedUser.userNickName,
+      },
       transports: ["websocket"],
       reconnectionDelayMax: 10000,
     });

@@ -20,7 +20,7 @@ const useToast = () => {
     }, time);
   };
 
-  return { toast };
+  return { toast, removeToast };
 };
 
 export default useToast;

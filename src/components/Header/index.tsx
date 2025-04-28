@@ -3,37 +3,38 @@ import style from "./header.module.css";
 import userAuthStore from "@/zustand/userAuth";
 import { useQueryClient } from "@tanstack/react-query";
 import Avartar from "../UI/Avartar";
-import { logout } from "@/apis/profile.api";
+import AlarmDropdown from "../UI/Dropdown/AlarmDropdown";
+import { useAlarmStore } from "@/zustand/alarmStore";
+import { getAlarmList } from "@/apis/alarm.api";
+import { useEffect } from "react";
 
 const Header = () => {
   const navigate = useNavigate();
-  const { userImage } = userAuthStore();
+  const { userImage, userId } = userAuthStore();
   const queryClient = useQueryClient();
-
+  const { addAlarm } = useAlarmStore();
   const loginStatus = JSON.parse(
     localStorage.getItem("loginStatus") || "false"
   );
 
   const handleLogout = async () => {
-    try {
-      const response = await logout();
-
-      if (response) {
-        userAuthStore.setState({
-          userId: null,
-          userEmail: null,
-          userNickName: "",
-          userImage: null,
-          userPet: null,
-        });
-        queryClient.removeQueries({ queryKey: ["userInfo"] });
-        localStorage.clear();
-        navigate("/login");
-      }
-    } catch (error) {
-      console.error("로그아웃 실패", error);
-    }
+    userAuthStore.setState({
+      userId: null,
+      userEmail: null,
+      userNickName: "",
+      userImage: null,
+      userPet: null,
+    });
+    queryClient.removeQueries({ queryKey: ["userInfo"] });
+    localStorage.clear();
   };
+
+  useEffect(() => {
+    if (userId) {
+      getAlarmList(userId) //
+        .then(addAlarm);
+    }
+  }, [userId]);
 
   return (
     <header className={style.total_wrap}>
@@ -59,6 +60,9 @@ const Header = () => {
                   image={userImage!}
                   className={style.avartar}
                 />
+              </li>
+              <li>
+                <AlarmDropdown />
               </li>
             </>
           ) : (
