@@ -65,7 +65,7 @@ export type UserType = {
   id: string;
   email: string;
   name: string;
-  nickName: string;
+  nickname: string;
   profileImage: string;
   address: {
     jibunAddress: string;
