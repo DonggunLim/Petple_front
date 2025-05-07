@@ -1,7 +1,7 @@
 import { PostItem } from "./post.type";
 
 export type Pet = {
-  _id?: string;
+  id?: string;
   age: string;
   name: string;
   image?: string;
@@ -69,7 +69,7 @@ export type UserType = {
   location_coordinates_lat: number;
   location_coordinates_lng: number;
   userType: string;
-  userPet: Array<PetType>;
+  pets: Array<PetType>;
   created_at: string;
   updated_at: string;
 };
@@ -79,7 +79,7 @@ export type PetType = {
   age: string;
   image: string;
   breed: string;
-  _id: string;
+  id: string;
 };
 
 export type userPostsResponse = {

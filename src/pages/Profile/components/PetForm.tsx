@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form";
 import style from "./petForm.module.css";
 import Button from "../../../components/UI/Button";
-import userAuthStore from "@/zustand/userStore";
+import userStore from "@/zustand/userStore";
 import { ChangeEvent, FC, useRef, useState } from "react";
 import { imageUpload } from "@/utils/imageUpload";
 import { Pet } from "@/types/user.type";
@@ -14,12 +14,12 @@ interface PetInfoProps {
   name?: string;
   age?: string;
   breed?: string;
-  _id?: string;
+  id?: string;
   image?: string;
 }
 
 const PetForm: FC<PetInfoProps> = (props) => {
-  const { name, age, _id, image, breed } = props;
+  const { name, age, id, image, breed } = props;
 
   const {
     handleSubmit,
@@ -31,13 +31,13 @@ const PetForm: FC<PetInfoProps> = (props) => {
       name: name || "",
       age: age || "",
       breed: breed || "",
-      _id: _id || "",
+      id: id || "",
       image: image || "",
     },
     resolver: zodResolver(petSchema),
     mode: "onBlur",
   });
-  const { userId, setUserPet, userPet } = userAuthStore();
+  const { user, setUser } = userStore();
   const [previewImg, setPreviewImg] = useState<string>(image || "");
   const [file, setFile] = useState<File | null>(null);
   const [edit, setEdit] = useState<boolean>(false);
@@ -78,17 +78,15 @@ const PetForm: FC<PetInfoProps> = (props) => {
       console.error(error);
     }
 
-    const updatedPet = await updatePetInfo(userId!, petData, _id!, imageUrl);
+    const updatedPet = await updatePetInfo(user?.id!, petData, id!, imageUrl);
 
     if (updatedPet) {
-      const updatePetList = userPet?.map((pet) =>
-        pet._id === updatedPet._id ? updatedPet : pet
+      const updatePetList = user?.pets?.map((pet) =>
+        pet.id === updatedPet.id ? updatedPet : pet
       );
 
       if (updatePetList) {
-        userAuthStore.setState({
-          userPet: updatePetList,
-        });
+        setUser({ pets: updatePetList });
 
         toast({
           type: "SUCCESS",
@@ -101,12 +99,12 @@ const PetForm: FC<PetInfoProps> = (props) => {
 
   const deletePetInfo = async () => {
     try {
-      const deletedPet = await deletePet(userId!, _id!);
+      const deletedPet = await deletePet(user?.id!, id!);
 
       if (deletedPet) {
-        const updateList = userPet?.filter((pet) => pet._id !== _id);
+        const updateList = user?.pets?.filter((pet) => pet.id !== id);
         if (updateList) {
-          setUserPet(updateList);
+          setUser({ pets: updateList });
           window.location.reload();
         }
 
@@ -126,7 +124,7 @@ const PetForm: FC<PetInfoProps> = (props) => {
       name: name || "",
       age: age || "",
       breed: breed || "",
-      _id: _id || "",
+      id: id || "",
       image: image || "",
     });
     setPreviewImg(image || "");
