@@ -46,11 +46,9 @@ export type SelectedUser = {
 };
 
 export interface AddressType {
-  jibunAddress: string;
-  location: {
-    type: "Point";
-    coordinates: [number | null, number | null];
-  };
+  jibun_address: string;
+  lng: number;
+  lat: number;
 }
 
 export type ChatUser = {
@@ -67,17 +65,13 @@ export type UserType = {
   name: string;
   nickname: string;
   profileImage: string;
-  address: {
-    jibunAddress: string;
-    location: {
-      type: "Point";
-      coordinates: Array<number>;
-    };
-  };
+  jibun_address: string;
+  location_coordinates_lat: number;
+  location_coordinates_lng: number;
   userType: string;
   userPet: Array<PetType>;
-  createdAt: string;
-  updatedAt: string;
+  created_at: string;
+  updated_at: string;
 };
 
 export type PetType = {
