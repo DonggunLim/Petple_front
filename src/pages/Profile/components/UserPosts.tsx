@@ -5,7 +5,7 @@ import { useState } from "react";
 
 import { useNavigate } from "react-router-dom";
 import { getLikePosts, getUserPosts } from "@/apis/post.api";
-import userAuthStore from "@/zustand/userAuth";
+import userAuthStore from "@/zustand/userStore";
 import { useQuery } from "@tanstack/react-query";
 import { PostItem } from "@/types/post.type";
 

@@ -1,7 +1,7 @@
 import styles from "./petfriends.module.css";
 import { useEffect, useRef, useState } from "react";
 import useKakaoLoader from "@/components/Map/MapLoader";
-import userAuthStore from "@/zustand/userAuth";
+import userAuthStore from "@/zustand/userStore";
 import { useQuery } from "@tanstack/react-query";
 import { getNearUsers } from "@/apis/profile.api";
 import { useNavigate } from "react-router-dom";

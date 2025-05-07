@@ -6,7 +6,7 @@ import styles from "./petWalk.module.css";
 import Map from "@/components/Map";
 import { WalkData } from "@/types/petApi.type";
 import { postWalkData } from "@/apis/public.api";
-import userAuthStore from "@/zustand/userAuth";
+import userAuthStore from "@/zustand/userStore";
 import useToast from "@/components/UI/Toast/hooks/useToast";
 
 const PetWalk = () => {

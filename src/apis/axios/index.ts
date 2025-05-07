@@ -1,4 +1,4 @@
-import userAuthStore from "@/zustand/userAuth";
+import userAuthStore from "@/zustand/userStore";
 import axios, { AxiosError } from "axios";
 
 const baseInstance = axios.create({

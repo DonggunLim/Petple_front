@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form";
 import style from "./petForm.module.css";
 import Button from "../../../components/UI/Button";
-import userAuthStore from "@/zustand/userAuth";
+import userAuthStore from "@/zustand/userStore";
 import { ChangeEvent, FC, useRef, useState } from "react";
 import { imageUpload } from "@/utils/imageUpload";
 import { Pet } from "@/types/user.type";

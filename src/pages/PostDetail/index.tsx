@@ -9,7 +9,7 @@ import {
 import { useParams } from "react-router-dom";
 import Comment from "./components/Comment/Comment";
 import { useMemo } from "react";
-import userAuthStore from "@/zustand/userAuth";
+import userAuthStore from "@/zustand/userStore";
 import LikeButton from "../../components/LikeButton/LikeButton";
 import Header from "@/components/Header";
 import { AxiosError } from "axios";

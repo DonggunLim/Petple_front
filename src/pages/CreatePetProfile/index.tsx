@@ -1,6 +1,6 @@
 import { ChangeEvent, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
-import userAuthStore from "@/zustand/userAuth";
+import userAuthStore from "@/zustand/userStore";
 import style from "./createPetProfile.module.css";
 import { Button } from "@/components";
 import { useNavigate } from "react-router-dom";

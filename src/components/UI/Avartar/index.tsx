@@ -1,4 +1,4 @@
-import userAuthStore from "@/zustand/userAuth";
+import userAuthStore from "@/zustand/userStore";
 import style from "./avartar.module.css";
 import { FC } from "react";
 import { useNavigate, useParams } from "react-router-dom";

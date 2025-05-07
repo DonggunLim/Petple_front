@@ -1,7 +1,7 @@
 import styles from "./comment.module.css";
 import { Avartar } from "@/components";
 import { CommentType } from "@/types/post.type";
-import userAuthStore from "@/zustand/userAuth";
+import userAuthStore from "@/zustand/userStore";
 import { useMemo } from "react";
 import ReplyList from "../Reply/ReplyList";
 import { useCommentStore } from "@/zustand/commentStore";

@@ -5,7 +5,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { useMemo } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { deletePostById } from "@/apis/post.api";
-import userAuthStore from "@/zustand/userAuth";
+import userAuthStore from "@/zustand/userStore";
 import ClockIcon from "@/assets/icons/clock.svg?react";
 import LikeIcon from "@/assets/icons/like.svg?react";
 import CommentIcon from "@/assets/icons/comment.svg?react";

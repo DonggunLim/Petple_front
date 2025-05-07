@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import style from "./header.module.css";
-import userAuthStore from "@/zustand/userAuth";
+import userStore from "@/zustand/userStore";
 import { useQueryClient } from "@tanstack/react-query";
 import Avartar from "../UI/Avartar";
 import AlarmDropdown from "../UI/Dropdown/AlarmDropdown";
@@ -10,7 +10,7 @@ import { useEffect } from "react";
 
 const Header = () => {
   const navigate = useNavigate();
-  const { userImage, userId } = userAuthStore();
+  const { user, clearUser } = userStore();
   const queryClient = useQueryClient();
   const { addAlarm } = useAlarmStore();
   const loginStatus = JSON.parse(
@@ -18,23 +18,17 @@ const Header = () => {
   );
 
   const handleLogout = async () => {
-    userAuthStore.setState({
-      userId: null,
-      userEmail: null,
-      userNickName: "",
-      userImage: null,
-      userPet: null,
-    });
+    clearUser();
     queryClient.removeQueries({ queryKey: ["userInfo"] });
     localStorage.clear();
   };
 
   useEffect(() => {
-    if (userId) {
-      getAlarmList(userId) //
+    if (user) {
+      getAlarmList(user.id) //
         .then(addAlarm);
     }
-  }, [userId]);
+  }, [user]);
 
   return (
     <header className={style.total_wrap}>
@@ -57,7 +51,7 @@ const Header = () => {
               <li>
                 <Avartar
                   onClick={() => navigate("/profile")}
-                  image={userImage!}
+                  image={user?.profileImage!}
                   className={style.avartar}
                 />
               </li>

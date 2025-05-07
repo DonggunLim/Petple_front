@@ -3,7 +3,7 @@ import styles from "./post.module.css";
 import CommunityPost from "@/components/CommunityPost";
 import LikeButton from "@/components/LikeButton/LikeButton";
 import { PostItem } from "@/types/post.type";
-import userAuthStore from "@/zustand/userAuth";
+import userAuthStore from "@/zustand/userStore";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useMemo } from "react";
 import { useLocation, useNavigate } from "react-router-dom";

@@ -10,7 +10,7 @@ import { deletePostById, getPostById, updatePostById } from "@/apis/post.api";
 import PostForm from "@/components/PostForm";
 import { SubmitHandler } from "react-hook-form";
 import { useEffect } from "react";
-import userAuthStore from "@/zustand/userAuth";
+import userAuthStore from "@/zustand/userStore";
 import { PostFormFields } from "@/types/post.type";
 import useToast from "@/components/UI/Toast/hooks/useToast";
 

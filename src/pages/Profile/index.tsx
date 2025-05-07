@@ -1,4 +1,4 @@
-import userAuthStore from "@/zustand/userAuth";
+import userAuthStore from "@/zustand/userStore";
 import { Carousel } from "@/components";
 import style from "./profile.module.css";
 import { useNavigate } from "react-router-dom";

@@ -2,7 +2,7 @@ import styles from "./chat.module.css";
 import ChatInput from "./components/ChatInput";
 import ChatList from "./components/ChatList";
 import useChatSocket from "./hooks/useChatSocket";
-import userAuthStore from "@/zustand/userAuth";
+import userAuthStore from "@/zustand/userStore";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { useParams } from "react-router-dom";
 import { getPrevMessages } from "@/apis/messages.api";

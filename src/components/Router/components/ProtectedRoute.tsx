@@ -1,19 +1,18 @@
 import useToast from "@/components/UI/Toast/hooks/useToast";
-import userAuthStore from "@/zustand/userAuth";
+import userStore from "@/zustand/userStore";
 import { FC, PropsWithChildren, useEffect } from "react";
 import { Navigate } from "react-router-dom";
 
 const ProtectedRoute: FC<PropsWithChildren> = ({ children }) => {
-  const { userId } = userAuthStore();
+  const { user } = userStore();
   const { toast } = useToast();
-
   useEffect(() => {
-    if (!userId) {
+    if (!user?.id) {
       toast({ type: "INFO", description: "로그인이 필요합니다." });
     }
   }, []);
 
-  return !!userId ? children : <Navigate to="/login" replace={true} />;
+  return !!user?.id ? children : <Navigate to="/login" replace={true} />;
 };
 
 export default ProtectedRoute;

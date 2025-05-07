@@ -1,4 +1,4 @@
-import userAuthStore from "@/zustand/userAuth";
+import userAuthStore from "@/zustand/userStore";
 import style from "./menu.module.css";
 import { useNavigate } from "react-router-dom";
 import { useMemo } from "react";

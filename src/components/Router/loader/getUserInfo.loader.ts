@@ -1,5 +1,5 @@
 import { recieveUserInfo } from "@/apis/profile.api";
-import userAuthStore from "@/zustand/userAuth";
+import userStore from "@/zustand/userStore";
 import { QueryClient } from "@tanstack/react-query";
 
 const getUserInfoLoader = async (QueryClient: QueryClient) => {
@@ -14,14 +14,7 @@ const getUserInfoLoader = async (QueryClient: QueryClient) => {
       queryKey: ["userInfo"],
       queryFn: recieveUserInfo,
     });
-    userAuthStore.setState({
-      userId: user.id,
-      userEmail: user.email,
-      userNickName: user.nickName,
-      userImage: user.image,
-      userPet: user.pet,
-      userAddress: user.address,
-    });
+    userStore.getState().setUser(user);
     return user;
   } catch (error) {
     return null;

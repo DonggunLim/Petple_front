@@ -1,5 +1,5 @@
 import { useForm } from "react-hook-form";
-import userAuthStore from "@/zustand/userAuth";
+import userAuthStore from "@/zustand/userStore";
 import { Button } from "@/components";
 import { ChangeEvent, useEffect, useRef, useState } from "react";
 import style from "@/pages/Profile/profile.module.css";

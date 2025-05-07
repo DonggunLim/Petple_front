@@ -6,7 +6,7 @@ import HelmetMetaTags from "../../HelmetMetaTags";
 import { useEffect, useMemo } from "react";
 import { simpleLayoutPath } from "@/consts/simpleLayoutPath";
 
-import userAuthStore from "@/zustand/userAuth";
+import userAuthStore from "@/zustand/userStore";
 import { useAlarmStore } from "@/zustand/alarmStore";
 import useToast from "@/components/UI/Toast/hooks/useToast";
 import { AlarmType } from "@/types/alarm.type";

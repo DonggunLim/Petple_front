@@ -4,7 +4,7 @@ import { CommentFormFields } from "@/types/post.type";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { CommentSchema } from "@/consts/zodSchema";
-import userAuthStore from "@/zustand/userAuth";
+import userAuthStore from "@/zustand/userStore";
 import useCommentMutation from "@/hooks/useCommentMutation";
 import { useCommentStore } from "@/zustand/commentStore";
 import { useEffect } from "react";
