@@ -29,9 +29,9 @@ const PopularPosts = () => {
       <ul className={styles.post_list_wrapper}>
         {posts.map((post, key) => (
           <li
-            key={`post-item-${post._id}`}
+            key={`post-item-${post.id}`}
             className={styles.post_item}
-            onClick={() => navigate(`/community/post/${post._id}`)}
+            onClick={() => navigate(`/community/post/${post.id}`)}
           >
             <div className={styles.rank}>{convertRankToEmoji(key + 1)}</div>
             <div className={styles.post_item_img_container}>
@@ -44,7 +44,7 @@ const PopularPosts = () => {
               />
             </div>
             <div className={styles.post_item_info}>
-              <span className={styles.nickname}>{post.creator.nickName}</span>
+              <span className={styles.nickname}>{post.creator.nickname}</span>
 
               <ul className={styles.tag_wrapper}>
                 {post.tags.map((tag, index) => (
@@ -58,11 +58,11 @@ const PopularPosts = () => {
               <div className={styles.post_item_bottom}>
                 <span className={styles.createdAt}>
                   <ClockIcon className={styles.icon} />
-                  {new Date(post.createdAt).toLocaleDateString()}
+                  {new Date(post.created_at).toLocaleDateString()}
                 </span>
                 <span className={styles.comment_count}>
                   <CommentIcon className={styles.icon} />
-                  {post.comments.length}
+                  {post.commentsCount}
                 </span>
                 <span className={styles.likes_count}>
                   <LikeIcon className={styles.icon} />

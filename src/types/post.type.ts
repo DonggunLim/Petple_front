@@ -16,7 +16,7 @@ export type ReplyType = {
 };
 
 export type CommentType = {
-  _id: string;
+  id: string;
   creator: {
     _id: string;
     name: string;
@@ -35,21 +35,21 @@ export type PostFormData = {
   tags: Array<string>;
   images: Array<string>;
   description: string;
-  _id: string;
+  id: string;
 };
 
 export type PostItem = PostFormData & {
   creator: {
-    _id: string;
+    id: string;
     name: string;
     email: string;
-    nickName: string;
+    nickname: string;
     profileImage: string;
   };
-  comments: string[];
-  likes: string[];
+  commentsCount: string[];
   likesCount: number;
-  createdAt: Date;
+  created_at: Date;
+  likes: string[];
 };
 
 export type CommentSubmitType =
