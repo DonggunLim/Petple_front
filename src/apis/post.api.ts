@@ -48,7 +48,7 @@ const updatePostById = async (data: PostFormData) => {
   }
 };
 
-const deletePostById = async (id: string) => {
+const deletePostById = async (id: number) => {
   try {
     await baseInstance.delete(`/posts/post/${id}`);
   } catch (error) {
@@ -65,10 +65,10 @@ const getUserPosts = async (nickName: string, page: number) => {
   }
 };
 
-const getLikePosts = async (nickName: string, page: number) => {
+const getLikePosts = async (nickname: string, page: number) => {
   try {
     const response = await baseInstance.get(
-      `/posts/like/${nickName}?page=${page}`
+      `/posts/like/${nickname}?page=${page}`
     );
     return response.data;
   } catch (error) {

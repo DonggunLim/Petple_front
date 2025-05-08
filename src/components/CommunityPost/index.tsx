@@ -62,7 +62,7 @@ export default CommunityPost;
 const PostHeader = (
   data: Pick<PostItem, "creator" | "created_at" | "tags" | "commentsCount"> & {
     likesCount: number;
-    postId: string;
+    postId: number;
   }
 ) => {
   const location = useLocation();

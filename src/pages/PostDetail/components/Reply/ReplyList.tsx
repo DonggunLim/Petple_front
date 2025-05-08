@@ -3,38 +3,30 @@ import Accordion from "@/components/UI/Accordion";
 import { useState } from "react";
 import ArrowDownIcon from "@/assets/icons/arrow_drop_down.svg?react";
 import ArrowUpIcon from "@/assets/icons/arrow_drop_up.svg?react";
-import { CommentType, ReplyType } from "@/types/post.type";
+import { CommentType } from "@/types/post.type";
 import { Avartar } from "@/components";
 import useCommentMutation from "@/hooks/useCommentMutation";
 import { useCommentStore } from "@/zustand/commentStore";
 
 interface ReplyListProps {
-  comment: CommentType;
-  replies: ReplyType[];
+  replies: CommentType[];
   isEditable: boolean;
 }
 
-const ReplyList = ({ comment, replies, isEditable }: ReplyListProps) => {
+const ReplyList = ({ replies, isEditable }: ReplyListProps) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
-  const {
-    postId,
-    setSubmitType,
-    setTargetReply,
-    setTargetComment,
-    resetForm,
-    initState,
-  } = useCommentStore();
-  const { deleteReply } = useCommentMutation({ postId });
+  const { postId, setSubmitType, setTargetComment, resetForm, initState } =
+    useCommentStore();
+  const { deleteComment } = useCommentMutation({ postId });
   const handleChangeOpen = (isOpen: boolean) => {
     setIsOpen(isOpen);
   };
-  const handleClickUpdate = (reply: ReplyType) => {
-    setSubmitType("UPDATE_REPLY");
-    setTargetReply(reply);
+  const handleClickUpdate = (comment: CommentType) => {
+    setSubmitType("UPDATE_COMMENT");
     setTargetComment(comment);
   };
-  const handleClickDelete = (replyId: string) => {
-    deleteReply.mutate({ commentId: comment._id, replyId });
+  const handleClickDelete = (commentId: number) => {
+    deleteComment.mutate(commentId);
     initState();
     resetForm();
   };
@@ -57,26 +49,26 @@ const ReplyList = ({ comment, replies, isEditable }: ReplyListProps) => {
         <Accordion.Content>
           <ul className={styles.replies_list}>
             {replies.map((reply) => (
-              <li key={`post-comment-${reply._id}`}>
+              <li key={`post-comment-${reply.id}`}>
                 <div className={styles.comment_body}>
                   <Avartar
-                    image={reply.profileImage}
+                    image={reply.creator.profileImage}
                     className={styles.avatar}
-                    creator={reply}
+                    creator={reply.creator}
                   />
                   <div className={styles.main_wrapper}>
                     <p>
-                      {reply.nickName}{" "}
+                      {reply.creator.nickname}{" "}
                       <span className={styles.comment_createdAt}>
-                        {new Date(reply.createdAt).toLocaleDateString()}
+                        {new Date(reply.created_at).toLocaleDateString()}
                       </span>
                     </p>
-                    <p className={styles.description}>{reply.description}</p>
+                    <p className={styles.description}>{reply.content}</p>
                   </div>
                   {isEditable && (
                     <div className={styles.actionmenu_wrapper}>
                       <p onClick={() => handleClickUpdate(reply)}>수정</p>
-                      <p onClick={() => handleClickDelete(reply._id)}>삭제</p>
+                      <p onClick={() => handleClickDelete(reply.id)}>삭제</p>
                     </div>
                   )}
                 </div>

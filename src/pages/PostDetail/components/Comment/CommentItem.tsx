@@ -1,7 +1,7 @@
 import styles from "./comment.module.css";
 import { Avartar } from "@/components";
 import { CommentType } from "@/types/post.type";
-import userAuthStore from "@/zustand/userStore";
+import userStore from "@/zustand/userStore";
 import { useMemo } from "react";
 import ReplyList from "../Reply/ReplyList";
 import { useCommentStore } from "@/zustand/commentStore";
@@ -11,18 +11,17 @@ interface CommentItemProps {
   comment: CommentType;
 }
 const CommentItem = ({ comment }: CommentItemProps) => {
-  const { creator, createdAt } = comment;
-  const { userId: signinedUserId } = userAuthStore();
+  const { creator, created_at } = comment;
+  const { user: signinedUser } = userStore();
   const { postId, setTargetComment, setSubmitType, initState, resetForm } =
     useCommentStore();
   const { deleteComment } = useCommentMutation({ postId });
   const isEditable = useMemo(
-    () => signinedUserId === comment.creator._id,
-    [comment, signinedUserId]
+    () => signinedUser?.id === comment.creator.id,
+    [comment, signinedUser?.id]
   );
   const handleClickReply = () => {
-    setTargetComment({ ...comment, description: "" });
-    setSubmitType("ADD_REPLY");
+    setTargetComment({ ...comment, content: "" });
   };
 
   const handleClickUpdate = () => {
@@ -30,7 +29,7 @@ const CommentItem = ({ comment }: CommentItemProps) => {
     setTargetComment(comment);
   };
   const handleClickDelete = () => {
-    postId && deleteComment.mutate({ postId, commentId: comment._id });
+    postId && deleteComment.mutate(comment.id);
     initState();
     resetForm?.();
   };
@@ -45,12 +44,12 @@ const CommentItem = ({ comment }: CommentItemProps) => {
           />
           <div className={styles.main_wrapper}>
             <p>
-              {creator.nickName}{" "}
+              {creator.nickname}{" "}
               <span className={styles.comment_createdAt}>
-                {new Date(createdAt).toLocaleDateString()}
+                {new Date(created_at).toLocaleDateString()}
               </span>
             </p>
-            <p className={styles.description}>{comment.description}</p>
+            <p className={styles.description}>{comment.content}</p>
             <p className={styles.reply} onClick={handleClickReply}>
               답글
             </p>
@@ -62,12 +61,8 @@ const CommentItem = ({ comment }: CommentItemProps) => {
             </div>
           )}
         </div>
-        {comment.replies.length > 0 && (
-          <ReplyList
-            comment={comment}
-            replies={comment.replies}
-            isEditable={isEditable}
-          />
+        {comment.replies?.length > 0 && (
+          <ReplyList replies={comment.replies} isEditable={isEditable} />
         )}
       </div>
     </>

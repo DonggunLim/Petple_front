@@ -9,7 +9,7 @@ const CommentList = ({ comments }: CommentListProps) => {
   return (
     <ul className={styles.comments_container}>
       {comments.map((comment) => (
-        <CommentItem comment={comment} key={`post-comments-${comment._id}`} />
+        <CommentItem comment={comment} key={`post-comments-${comment.id}`} />
       ))}
     </ul>
   );

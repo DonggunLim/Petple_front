@@ -23,7 +23,7 @@ const PostDetailPage = () => {
   const { user } = userStore();
   const { id: postId } = useParams();
   const { data: post } = useSuspenseQuery({
-    queryKey: ["Post", postId],
+    queryKey: ["Post", Number(postId)],
     queryFn: () => postId && getPostById(postId),
   });
   const currentLikeStatus = useMemo(
@@ -79,7 +79,7 @@ const PostDetailPage = () => {
         currentLikeStatus={currentLikeStatus}
         handleClickLike={handleClickLike}
       />
-      <Comment comments={post.comments} postId={post._id} />
+      <Comment comments={post.comments} postId={post.id} />
     </div>
   );
 };
