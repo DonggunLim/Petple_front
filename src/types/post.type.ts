@@ -40,16 +40,16 @@ export type PostFormData = {
 
 export type PostItem = PostFormData & {
   creator: {
-    id: string;
+    id: number;
     name: string;
     email: string;
     nickname: string;
     profileImage: string;
   };
-  commentsCount: string[];
+  commentsCount: number;
   likesCount: number;
   created_at: Date;
-  likes: string[];
+  likedUserIds: number[];
 };
 
 export type CommentSubmitType =

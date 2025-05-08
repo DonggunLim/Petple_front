@@ -3,7 +3,7 @@ import styles from "./post.module.css";
 import CommunityPost from "@/components/CommunityPost";
 import LikeButton from "@/components/LikeButton/LikeButton";
 import { PostItem } from "@/types/post.type";
-import userAuthStore from "@/zustand/userStore";
+import userStore from "@/zustand/userStore";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useMemo } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -16,13 +16,13 @@ interface PostProps {
 
 const Post = ({ post }: PostProps) => {
   const navigate = useNavigate();
-  const { userId } = userAuthStore();
+  const { user } = userStore();
   const { pathname } = useLocation();
   const { toast } = useToast();
   const qc = useQueryClient();
   const currentLikeStatus = useMemo(
-    () => !!userId && post.likes.includes(userId),
-    [post.likes, userId]
+    () => !!user?.id && post.likedUserIds.includes(user.id),
+    [post.likedUserIds, user?.id]
   );
 
   const { mutate: updateLikesMutate } = useMutation({
@@ -38,10 +38,10 @@ const Post = ({ post }: PostProps) => {
           (page: { posts: PostItem[] }) => ({
             ...page,
             posts: page.posts.map((post: PostItem) => {
-              if (post._id === postId) {
+              if (post.id === postId) {
                 const updatedLikes = likeStatus
-                  ? [...post.likes, userId]
-                  : post.likes.filter((id) => id !== userId);
+                  ? [...post.likedUserIds, user?.id]
+                  : post.likedUserIds.filter((id) => id !== user?.id);
                 return { ...post, likes: updatedLikes };
               }
               return post;
@@ -65,13 +65,12 @@ const Post = ({ post }: PostProps) => {
   });
 
   const handleClickLike = () => {
-    if (!userId) {
+    if (!user?.id) {
       toast({ type: "ERROR", description: "로그인이 필요합니다.😥" });
       return;
     }
-    updateLikesMutate({ postId: post._id, likeStatus: !currentLikeStatus });
+    updateLikesMutate({ postId: post.id, likeStatus: !currentLikeStatus });
   };
-
   return (
     <>
       <li className={styles.post_wrapper}>
@@ -79,13 +78,13 @@ const Post = ({ post }: PostProps) => {
         <div
           className={styles.description}
           onClick={() =>
-            pathname === "/community" && navigate(`/community/post/${post._id}`)
+            pathname === "/community" && navigate(`/community/post/${post.id}`)
           }
         >
           {post.description}
         </div>
         <LikeButton
-          likes={post.likes}
+          likedUserIds={post.likedUserIds}
           currentLikeStatus={currentLikeStatus}
           handleClickLike={handleClickLike}
         />

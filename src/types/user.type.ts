@@ -60,7 +60,7 @@ export type ChatUser = {
 };
 
 export type UserType = {
-  id: string;
+  id: number;
   email: string;
   name: string;
   nickname: string;
