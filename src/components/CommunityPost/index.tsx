@@ -16,7 +16,6 @@ interface PostProps {
 }
 
 const CommunityPost = ({ post }: PostProps) => {
-  console.log({ post });
   const { creator, images, tags, created_at, id, commentsCount, likesCount } =
     post;
   return (
@@ -70,7 +69,6 @@ const PostHeader = (
   const navigate = useNavigate();
   const { user } = userStore();
   const { creator, tags, created_at, commentsCount, likesCount, postId } = data;
-  console.log(data);
   const qc = useQueryClient();
 
   const isEditablePost = useMemo(

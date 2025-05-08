@@ -42,7 +42,7 @@ const addPost = async (data: {
 
 const updatePostById = async (data: PostFormData) => {
   try {
-    await baseInstance.put(`/posts/post/${data._id}`, data);
+    await baseInstance.put(`/posts/post/${data.id}`, data);
   } catch (error) {
     throw error;
   }

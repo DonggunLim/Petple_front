@@ -37,7 +37,6 @@ const PetFriendsPage = () => {
     const { kakao } = window;
     if (!kakao?.maps) return;
     if (!signinedUser?.jibun_address || !nearUsers) return;
-    console.log({ signinedUser });
     initializeMap(
       kakao,
       nearUsers,
@@ -127,7 +126,6 @@ const initializeMap = (
   const map = new kakao.maps.Map(mapConatinerRef.current, options);
 
   const bounds = new kakao.maps.LatLngBounds();
-  console.log({ nearUsers });
   nearUsers.forEach((user: UserType) => {
     const isMe = user.id === signinedUser.id;
     createMarker(kakao, map, user, bounds, isMe, handleClickMarker);
@@ -168,7 +166,6 @@ const createCustomOverlayMarker = (
   wrapper.className = isMe ? "my-marker" : "custom-marker";
 
   const img = document.createElement("img");
-  console.log(user);
   img.src = user.pets[0]?.image || user.profileImage || "/images/profile.png";
   img.alt = "유저이미지";
 

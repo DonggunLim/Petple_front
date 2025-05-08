@@ -9,7 +9,7 @@ import {
 import { useParams } from "react-router-dom";
 import Comment from "./components/Comment/Comment";
 import { useMemo } from "react";
-import userAuthStore from "@/zustand/userStore";
+import userStore from "@/zustand/userStore";
 import LikeButton from "../../components/LikeButton/LikeButton";
 import Header from "@/components/Header";
 import { AxiosError } from "axios";
@@ -20,15 +20,15 @@ import { Helmet } from "react-helmet-async";
 const PostDetailPage = () => {
   const { toast } = useToast();
   const qc = useQueryClient();
-  const user = userAuthStore();
+  const { user } = userStore();
   const { id: postId } = useParams();
   const { data: post } = useSuspenseQuery({
     queryKey: ["Post", postId],
     queryFn: () => postId && getPostById(postId),
   });
   const currentLikeStatus = useMemo(
-    () => !!user.userId && post.likes.includes(user.userId),
-    [post.likes, user.userId]
+    () => !!user?.id && post.likedUserIds.includes(user.id),
+    [post.likes, user?.id]
   );
 
   const inValidateQuery = () =>
@@ -52,7 +52,7 @@ const PostDetailPage = () => {
 
   const handleClickLike = () => {
     if (!postId) return;
-    if (!user.userId) {
+    if (!user?.id) {
       toast({
         type: "INFO",
         description: "로그인이 필요합니다.",
@@ -75,7 +75,7 @@ const PostDetailPage = () => {
       <CommunityPost post={post} />
       <div className={styles.description}>{post.description}</div>
       <LikeButton
-        likes={post.likes}
+        likedUserIds={post.likedUserIds}
         currentLikeStatus={currentLikeStatus}
         handleClickLike={handleClickLike}
       />
