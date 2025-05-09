@@ -38,12 +38,17 @@ const Post = ({ post }: PostProps) => {
           (page: { posts: PostItem[] }) => ({
             ...page,
             posts: page.posts.map((post: PostItem) => {
-              if (post.id === postId) {
+              if (post.id === Number(postId)) {
                 const updatedLikes = likeStatus
                   ? [...post.likedUserIds, user?.id]
                   : post.likedUserIds.filter((id) => id !== user?.id);
-                return { ...post, likes: updatedLikes };
+                return {
+                  ...post,
+                  likedUserIds: updatedLikes,
+                  likesCount: updatedLikes.length,
+                };
               }
+
               return post;
             }),
           })

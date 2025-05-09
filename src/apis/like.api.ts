@@ -1,8 +1,8 @@
 import baseInstance from "./axios";
 
-const updateLikes = async (data: { likeStatus: boolean; postId: string }) => {
+const updateLikes = async (data: { likeStatus: boolean; postId: number }) => {
   try {
-    await baseInstance.patch(`/posts/post/${data.postId}`, {
+    await baseInstance.post(`/posts/${data.postId}/like`, {
       likeStatus: data.likeStatus,
     });
   } catch (error) {

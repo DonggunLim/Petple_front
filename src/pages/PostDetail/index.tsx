@@ -26,13 +26,14 @@ const PostDetailPage = () => {
     queryKey: ["Post", Number(postId)],
     queryFn: () => postId && getPostById(postId),
   });
+
   const currentLikeStatus = useMemo(
     () => !!user?.id && post.likedUserIds.includes(user.id),
-    [post.likes, user?.id]
+    [post.likedUserIds, user?.id]
   );
 
   const inValidateQuery = () =>
-    qc.invalidateQueries({ queryKey: ["Post", postId] });
+    qc.invalidateQueries({ queryKey: ["Post", Number(postId)] });
 
   const { mutate: updateLikesMutate } = useMutation({
     mutationFn: updateLikes,
@@ -59,7 +60,10 @@ const PostDetailPage = () => {
       });
       return;
     }
-    updateLikesMutate({ postId, likeStatus: !currentLikeStatus });
+    updateLikesMutate({
+      postId: Number(postId),
+      likeStatus: !currentLikeStatus,
+    });
   };
 
   return (
