@@ -16,7 +16,7 @@ const ChatHeader = ({ targetUser }: ChatHeaderProps) => {
       >
         <img src="/images/prev.png" alt="뒤로가기 버튼 아이콘" />
       </div>
-      <h2>{targetUser.nickName}님 과의 대화방</h2>
+      <h2>{targetUser.nickname}님 과의 대화방</h2>
     </div>
   );
 };

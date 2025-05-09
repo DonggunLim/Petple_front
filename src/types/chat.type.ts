@@ -3,15 +3,15 @@ import { PetType } from "./user.type";
 export type ChatMessageType = {
   from: {
     id: string;
-    nickName: string;
+    nickname: string;
     profileImage: string;
-    userPet: PetType[];
+    pets: PetType[];
   };
   to: {
     id: string;
-    nickName: string;
+    nickname: string;
     profileImage: string;
-    userPet: PetType[];
+    pets: PetType[];
   };
-  text: string;
+  content: string;
 };

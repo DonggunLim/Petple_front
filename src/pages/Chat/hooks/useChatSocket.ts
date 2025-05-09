@@ -1,11 +1,11 @@
 import { config } from "@/consts/config";
 import { ChatMessageType } from "@/types/chat.type";
-import { AuthStore, UserType } from "@/types/user.type";
+import { UserType } from "@/types/user.type";
 import { useEffect, useRef, useState } from "react";
 import { io, Socket } from "socket.io-client";
 
 interface UseChatSocketProps {
-  signinedUser: AuthStore;
+  signinedUser: UserType | null;
   preMessages: ChatMessageType[];
   targetUser: UserType;
 }
@@ -22,22 +22,22 @@ const useChatSocket = ({
   );
   const socketRef = useRef<Socket>(null);
 
-  const sendMessage = (text: string) => {
-    if (!text || !roomId || !socketRef.current) return;
+  const sendMessage = (content: string) => {
+    if (!content || !roomId || !socketRef.current) return;
     socketRef.current.emit("send_message", {
       roomId,
-      text,
+      content,
       from: {
-        id: signinedUser.userId,
-        nickName: signinedUser.userNickName,
-        userPet: signinedUser.userPet,
-        profileImage: signinedUser.userImage,
+        id: signinedUser?.id,
+        nickname: signinedUser?.nickname,
+        profileImage: signinedUser?.profileImage,
+        pets: signinedUser?.pets,
       },
       to: {
-        id: targetUser._id,
-        nickName: targetUser.nickName,
-        userPet: targetUser.userPet,
+        id: targetUser.id,
+        nickname: targetUser.nickname,
         profileImage: targetUser.profileImage,
+        pets: targetUser.pets,
       },
     });
   };
@@ -54,8 +54,8 @@ const useChatSocket = ({
   useEffect(() => {
     const socket = io(`${config.app.backendUrl}/chat`, {
       query: {
-        userId: signinedUser.userId,
-        nickname: signinedUser.userNickName,
+        userId: signinedUser?.id,
+        nickname: signinedUser?.nickname,
       },
       transports: ["websocket"],
       reconnectionDelayMax: 10000,
@@ -82,8 +82,8 @@ const useChatSocket = ({
   }, []);
 
   useEffect(() => {
-    if (socketRef.current && signinedUser && signinedUser.userId) {
-      const roomId = [signinedUser.userId, targetUser._id].sort().join("-");
+    if (socketRef.current && signinedUser && signinedUser.id) {
+      const roomId = [signinedUser.id, targetUser.id].sort().join("-");
       setRoomId(roomId);
       socketRef.current.emit("join_room", roomId);
     }
