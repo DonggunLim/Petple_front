@@ -6,7 +6,7 @@ import HelmetMetaTags from "../../HelmetMetaTags";
 import { useEffect, useMemo } from "react";
 import { simpleLayoutPath } from "@/consts/simpleLayoutPath";
 
-import userAuthStore from "@/zustand/userStore";
+import userStore from "@/zustand/userStore";
 import { useAlarmStore } from "@/zustand/alarmStore";
 import useToast from "@/components/UI/Toast/hooks/useToast";
 import { AlarmType } from "@/types/alarm.type";
@@ -19,20 +19,23 @@ const BaseLayout = () => {
     [currentPath]
   );
 
-  const user = userAuthStore();
+  const { user } = userStore();
   const { addAlarm } = useAlarmStore();
   const { toast, removeToast } = useToast();
   const navigate = useNavigate();
 
   const handleClickToast = (alarm: AlarmType) => {
-    navigate(`/chat/${alarm.from.nickName}`);
+    navigate(`/chat/${alarm.from.nickname}`);
     removeToast();
   };
 
+  // sse연결
   useEffect(() => {
-    if (!user.userId) {
+    // 로그인한 유저만 SSE 연결
+    if (!user?.id) {
       return;
     }
+    // eventSource instance 생성
     const eventSource = new EventSource(
       `${import.meta.env.VITE_API_BASE_URL}/api/alarms/connect`,
       { withCredentials: true }
@@ -41,7 +44,8 @@ const BaseLayout = () => {
     eventSource.onmessage = (event) => {
       const currentPath = window.location.pathname;
       const alarm: AlarmType = JSON.parse(event.data);
-      if (decodeURIComponent(currentPath) === `/chat/${alarm.from.nickName}`) {
+      // 해당하는 알림 채팅방에 있을떄에는 알림 수신x
+      if (decodeURIComponent(currentPath) === `/chat/${alarm.from.nickname}`) {
         return;
       }
       addAlarm([alarm]);
@@ -66,7 +70,7 @@ const BaseLayout = () => {
                 alt="프로필 이미지"
                 onClick={(e) => {
                   e.stopPropagation();
-                  navigate(`/profile/${alarm.from.nickName}`);
+                  navigate(`/profile/${alarm.from.nickname}`);
                 }}
               />
               <div className={styles.alarm_toast_content_text_container}>
@@ -83,7 +87,7 @@ const BaseLayout = () => {
     return () => {
       eventSource.close();
     };
-  }, [user.userId]);
+  }, [user?.id]);
 
   return (
     <>

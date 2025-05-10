@@ -14,12 +14,12 @@ export const useAlarmStore = create<AlarmStore>((set) => ({
     set((state) => ({ alarmList: [...state.alarmList, ...alarms] })),
   deleteAlarm: (uid: number) =>
     set((state) => ({
-      alarmList: state.alarmList.filter((item) => item.uid !== uid),
+      alarmList: state.alarmList.filter((item) => item.id !== uid),
     })),
   updateAlarm: (alarm: AlarmType) =>
     set((state) => ({
       alarmList: state.alarmList.map((item) =>
-        item.uid === alarm.uid ? alarm : item
+        item.id === alarm.id ? alarm : item
       ),
     })),
 }));

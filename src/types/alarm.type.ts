@@ -1,10 +1,10 @@
 export type AlarmType = {
-  uid: number;
+  id: number;
   content: string;
   from: {
     profileImage: string;
-    nickName: string;
+    nickname: string;
   };
   isRead: boolean;
-  createdAt: Date;
+  created_at: Date;
 };

@@ -27,7 +27,7 @@ const AlarmDropdown = () => {
     () =>
       [...alarmList].sort(
         (a, b) =>
-          new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+          new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
       ),
     [alarmList]
   );
@@ -37,22 +37,22 @@ const AlarmDropdown = () => {
       return;
     }
     try {
-      await updateAlarmRead(alarm.uid);
+      await updateAlarmRead(alarm.id);
       updateAlarmStore({ ...alarm, isRead: true });
     } catch (error) {
       toast({ type: "ERROR", description: "알림 업데이트 실패하였습니다." });
     } finally {
-      if (decodeURIComponent(currentPath) === `/chat/${alarm.from.nickName}`) {
+      if (decodeURIComponent(currentPath) === `/chat/${alarm.from.nickname}`) {
         return;
       }
-      navigate(`/chat/${alarm.from.nickName}`);
+      navigate(`/chat/${alarm.from.nickname}`);
     }
   };
 
   const handleDeleteAlarm = async (alarm: AlarmType) => {
     try {
-      await deleteAlarm(alarm.uid);
-      deleteAlarmStore(alarm.uid);
+      await deleteAlarm(alarm.id);
+      deleteAlarmStore(alarm.id);
     } catch (error) {
       toast({
         type: "ERROR",
@@ -77,7 +77,7 @@ const AlarmDropdown = () => {
             </div>
             {sortedAlarmList.map((alarm) => (
               <Dropdown.Item
-                key={alarm.uid}
+                key={alarm.id}
                 className={`${styles.item} ${alarm.isRead && styles.read}`}
                 onClick={() => {
                   handleAlarmClick(alarm);
@@ -85,7 +85,7 @@ const AlarmDropdown = () => {
               >
                 <div className={styles.text_container}>
                   <p className={styles.date}>
-                    {alarm.createdAt
+                    {alarm.created_at
                       .toLocaleString()
                       .slice(0, 10)
                       .replaceAll("-", ".")}{" "}
@@ -98,7 +98,7 @@ const AlarmDropdown = () => {
                     <div>
                       <p className={styles.text}>
                         <span className={styles.sender}>
-                          {alarm.from.nickName}
+                          {alarm.from.nickname}
                         </span>{" "}
                         님으로부터 메시지가 도착하였습니다.
                       </p>
