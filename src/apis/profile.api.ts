@@ -83,12 +83,15 @@ const updatePetInfo = async (
   _id: string,
   imageUrl: string
 ) => {
+  const { name, breed, age } = petData;
   try {
     const response = await baseInstance.post(`/my/pet/${_id}`, {
-      userId: userId,
-      userPet: petData,
+      userId,
       petId: _id,
-      petImage: imageUrl,
+      name,
+      age,
+      breed,
+      image: imageUrl,
     });
 
     return response.data.pet;

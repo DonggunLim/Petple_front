@@ -1,4 +1,4 @@
-import userAuthStore from "@/zustand/userAuth";
+import userStore from "@/zustand/userStore";
 import { Carousel } from "@/components";
 import style from "./profile.module.css";
 import { useNavigate } from "react-router-dom";
@@ -7,7 +7,7 @@ import UserProfileForm from "@/pages/Profile/components/UserProfileForm";
 import UserPosts from "./components/UserPosts";
 
 const Profile = () => {
-  const { userPet } = userAuthStore();
+  const { user } = userStore();
 
   const navigate = useNavigate();
 
@@ -32,10 +32,10 @@ const Profile = () => {
         </div>
         <Carousel className={style.carousel}>
           <Carousel.ItemList>
-            {userPet?.map((pet, index) => (
+            {user?.pets?.map((pet, index) => (
               <Carousel.Item key={index} index={index}>
                 <PetForm
-                  _id={pet._id}
+                  id={pet.id}
                   name={pet.name}
                   age={pet.age}
                   image={pet.image}
@@ -44,7 +44,7 @@ const Profile = () => {
               </Carousel.Item>
             ))}
           </Carousel.ItemList>
-          {(userPet?.length ?? 0) >= 2 && (
+          {(user?.pets?.length ?? 0) >= 2 && (
             <Carousel.Indicator className={style.indicator} />
           )}
         </Carousel>

@@ -42,13 +42,13 @@ const addPost = async (data: {
 
 const updatePostById = async (data: PostFormData) => {
   try {
-    await baseInstance.put(`/posts/post/${data._id}`, data);
+    await baseInstance.put(`/posts/post/${data.id}`, data);
   } catch (error) {
     throw error;
   }
 };
 
-const deletePostById = async (id: string) => {
+const deletePostById = async (id: number) => {
   try {
     await baseInstance.delete(`/posts/post/${id}`);
   } catch (error) {
@@ -65,10 +65,10 @@ const getUserPosts = async (nickName: string, page: number) => {
   }
 };
 
-const getLikePosts = async (nickName: string, page: number) => {
+const getLikePosts = async (nickname: string, page: number) => {
   try {
     const response = await baseInstance.get(
-      `/posts/like/${nickName}?page=${page}`
+      `/posts/like/${nickname}?page=${page}`
     );
     return response.data;
   } catch (error) {

@@ -27,7 +27,7 @@ const CommunityPage = () => {
     <section className={styles.wrapper}>
       <ul className={styles.post_container} ref={postContainerRef}>
         {posts?.map((post: PostItem) => (
-          <Post post={post} key={`community-post-${post._id}`} />
+          <Post post={post} key={`community-post-${post.id}`} />
         ))}
         <div ref={targetRef}></div>
       </ul>

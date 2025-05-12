@@ -1,7 +1,7 @@
 import { PostItem } from "./post.type";
 
 export type Pet = {
-  _id?: string;
+  id?: string;
   age: string;
   name: string;
   image?: string;
@@ -46,11 +46,9 @@ export type SelectedUser = {
 };
 
 export interface AddressType {
-  jibunAddress: string;
-  location: {
-    type: "Point";
-    coordinates: [number | null, number | null];
-  };
+  jibun_address: string;
+  lng: number;
+  lat: number;
 }
 
 export type ChatUser = {
@@ -62,22 +60,18 @@ export type ChatUser = {
 };
 
 export type UserType = {
-  _id: string;
+  id: number;
   email: string;
   name: string;
-  nickName: string;
+  nickname: string;
   profileImage: string;
-  address: {
-    jibunAddress: string;
-    location: {
-      type: "Point";
-      coordinates: Array<number>;
-    };
-  };
+  jibun_address: string;
+  location_coordinates_lat: number;
+  location_coordinates_lng: number;
   userType: string;
-  userPet: Array<PetType>;
-  createdAt: string;
-  updatedAt: string;
+  pets: Array<PetType>;
+  created_at: string;
+  updated_at: string;
 };
 
 export type PetType = {
@@ -85,7 +79,7 @@ export type PetType = {
   age: string;
   image: string;
   breed: string;
-  _id: string;
+  id: string;
 };
 
 export type userPostsResponse = {

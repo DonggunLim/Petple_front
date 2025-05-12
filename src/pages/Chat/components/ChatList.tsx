@@ -1,11 +1,11 @@
 import { ChatMessageType } from "@/types/chat.type";
 import styles from "./chatlist.module.css";
-import { AuthStore } from "@/types/user.type";
+import { UserType } from "@/types/user.type";
 import ChatMessage from "./ChatMessage";
 
 interface ChatListProps {
   messages: ChatMessageType[];
-  signinedUser: AuthStore;
+  signinedUser: UserType | null;
 }
 
 const ChatList = ({ messages, signinedUser }: ChatListProps) => {
@@ -15,7 +15,7 @@ const ChatList = ({ messages, signinedUser }: ChatListProps) => {
         {messages.map((message, index) => (
           <ChatMessage
             message={message}
-            nickname={signinedUser.userNickName}
+            nickname={signinedUser?.nickname}
             key={index}
           />
         ))}

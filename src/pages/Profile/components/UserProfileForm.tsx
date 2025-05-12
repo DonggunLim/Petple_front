@@ -1,5 +1,5 @@
 import { useForm } from "react-hook-form";
-import userAuthStore from "@/zustand/userAuth";
+import userStore from "@/zustand/userStore";
 import { Button } from "@/components";
 import { ChangeEvent, useEffect, useRef, useState } from "react";
 import style from "@/pages/Profile/profile.module.css";
@@ -8,19 +8,11 @@ import { checkNickName, updateUserInfo } from "@/apis/profile.api";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { userSchema } from "@/consts/zodSchema";
 import AddressForm from "@/pages/Profile/components/AddressForm";
-import { AddressType } from "@/types/user.type";
 import useToast from "../../../components/UI/Toast/hooks/useToast";
-
-const addressDefaultValue: AddressType = {
-  jibunAddress: "",
-  location: {
-    type: "Point",
-    coordinates: [null, null],
-  },
-};
+import { AddressType } from "@/types/user.type";
 
 const UserProfileForm = () => {
-  const { userNickName, userImage, userEmail, userAddress } = userAuthStore();
+  const { user, setUser } = userStore();
   const { toast } = useToast();
 
   const {
@@ -31,7 +23,7 @@ const UserProfileForm = () => {
     formState: { errors },
   } = useForm({
     defaultValues: {
-      nickName: userNickName || "",
+      nickName: user?.nickname || "",
     },
     resolver: zodResolver(userSchema),
     mode: "onBlur",
@@ -39,23 +31,25 @@ const UserProfileForm = () => {
 
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [previewImg, setPreviewImg] = useState<string>(
-    userImage || "/images/profile.png"
+    user?.profileImage || "/images/profile.png"
   );
   const [file, setFile] = useState<File | null>(null);
   const [updating, setUpdating] = useState(false);
   const [isNickNameConfirm, setIsNickNameConfirm] = useState<boolean>(false);
   const [confirmedNickName, setConfirmedNickName] = useState<string | null>(
-    userNickName || ""
+    user?.nickname || ""
   );
-  const [selectedAddress, setSelectedAddress] = useState<AddressType>(
-    userAddress ?? addressDefaultValue
-  );
+  const [selectedAddress, setSelectedAddress] = useState<AddressType>({
+    jibun_address: user?.jibun_address ?? "",
+    lat: user?.location_coordinates_lat ?? 0,
+    lng: user?.location_coordinates_lng ?? 0,
+  });
 
   useEffect(() => {
-    if (userImage) {
-      setPreviewImg(userImage);
+    if (user?.profileImage) {
+      setPreviewImg(user.profileImage);
     }
-  }, [userImage]);
+  }, [user?.profileImage]);
 
   const handleClickFile = () => {
     fileInputRef?.current?.click();
@@ -78,16 +72,16 @@ const UserProfileForm = () => {
   // 회원정보 수정
   const onSubmitUser = async () => {
     const nickName = getValues("nickName");
-    let imageUrl = userImage;
+    let imageUrl = user?.profileImage;
 
     if (file) {
       imageUrl = await imageUpload(file);
       if (imageUrl) {
-        userAuthStore.setState({ userImage: imageUrl });
+        setUser({ profileImage: imageUrl });
       }
     }
 
-    const isNickNameChanged = nickName !== userNickName;
+    const isNickNameChanged = nickName !== user?.nickname;
 
     if (
       isNickNameChanged &&
@@ -98,26 +92,28 @@ const UserProfileForm = () => {
     }
 
     if (
-      nickName === userNickName &&
-      imageUrl === userImage &&
-      JSON.stringify(selectedAddress) === JSON.stringify(userAddress)
+      nickName === user?.nickname &&
+      imageUrl === user.profileImage &&
+      JSON.stringify(selectedAddress) === JSON.stringify(user.jibun_address)
     ) {
       setUpdating(false);
       return;
     }
 
     const success = await updateUserInfo(
-      userEmail,
+      user?.email ?? "",
       nickName,
       imageUrl ?? "",
       selectedAddress
     );
 
     if (success) {
-      userAuthStore.setState({
-        userNickName: nickName,
-        userImage: imageUrl,
-        userAddress: selectedAddress,
+      setUser({
+        nickname: nickName,
+        profileImage: imageUrl,
+        jibun_address: selectedAddress.jibun_address,
+        location_coordinates_lat: selectedAddress.lat,
+        location_coordinates_lng: selectedAddress.lng,
       });
 
       toast({ type: "SUCCESS", description: "회원정보 수정 완료" });
@@ -140,12 +136,12 @@ const UserProfileForm = () => {
       return;
     }
 
-    if (nickName === userNickName) {
+    if (nickName === user?.nickname) {
       setIsNickNameConfirm(true);
       setConfirmedNickName(nickName);
     }
 
-    if (nickName === userNickName) {
+    if (nickName === user?.nickname) {
       setIsNickNameConfirm(true);
       toast({ type: "SUCCESS", description: "사용가능한 닉네임 입니다." });
       return;
@@ -165,10 +161,14 @@ const UserProfileForm = () => {
 
   const handlePrevProfile = () => {
     setUpdating(false);
-    setPreviewImg(userImage || "");
-    setSelectedAddress(userAddress! || "");
+    setPreviewImg(user?.profileImage || "");
+    setSelectedAddress({
+      jibun_address: user?.jibun_address ?? "",
+      lat: user?.location_coordinates_lat ?? 0,
+      lng: user?.location_coordinates_lng ?? 0,
+    });
     reset({
-      nickName: userNickName || "",
+      nickName: user?.nickname || "",
     });
   };
 
@@ -234,7 +234,7 @@ const UserProfileForm = () => {
             <label>주소</label>
             <div className={style.nickName_div}>
               <input
-                value={selectedAddress.jibunAddress}
+                value={selectedAddress.jibun_address}
                 className={style.input}
                 onClick={handleOpenModal}
                 readOnly
@@ -260,7 +260,7 @@ const UserProfileForm = () => {
               alt="프로필 이미지"
             />
             <div className={style.userName_box}>
-              <p>{userNickName}</p>
+              <p>{user?.nickname}</p>
               <img
                 onClick={() => setUpdating(true)}
                 src={"/images/pencil.png"}
@@ -268,7 +268,7 @@ const UserProfileForm = () => {
                 alt="프로필 수정"
               />
             </div>
-            <p className={style.address}>{selectedAddress.jibunAddress}</p>
+            <p className={style.address}>{selectedAddress.jibun_address}</p>
           </div>
         </ul>
       )}

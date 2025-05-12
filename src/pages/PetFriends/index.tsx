@@ -1,11 +1,11 @@
 import styles from "./petfriends.module.css";
 import { useEffect, useRef, useState } from "react";
 import useKakaoLoader from "@/components/Map/MapLoader";
-import userAuthStore from "@/zustand/userAuth";
+import userStore from "@/zustand/userStore";
 import { useQuery } from "@tanstack/react-query";
 import { getNearUsers } from "@/apis/profile.api";
 import { useNavigate } from "react-router-dom";
-import { AuthStore, UserType } from "@/types/user.type";
+import { UserType } from "@/types/user.type";
 import { Button } from "@/components";
 
 const PetFriendsPage = () => {
@@ -13,19 +13,19 @@ const PetFriendsPage = () => {
   const [selectedUser, setSelectedUser] = useState<UserType>();
   const navigate = useNavigate();
   const { isSuccess, cleanup } = useKakaoLoader();
-  const signinedUser = userAuthStore();
+  const { user: signinedUser } = userStore();
   const { data: nearUsers } = useQuery({
-    queryKey: ["locations", signinedUser.userId],
+    queryKey: ["locations", signinedUser?.id],
     queryFn: () =>
       getNearUsers({
-        lng: signinedUser.userAddress?.location.coordinates[0] || 0,
-        lat: signinedUser.userAddress?.location.coordinates[1] || 0,
+        lng: signinedUser?.location_coordinates_lng || 0,
+        lat: signinedUser?.location_coordinates_lat || 0,
       }),
-    enabled: !!signinedUser.userAddress?.jibunAddress,
+    enabled: !!signinedUser?.jibun_address,
   });
 
   const handleClickMarker = (user: UserType) => {
-    if (user._id === signinedUser.userId) {
+    if (user.id === signinedUser?.id) {
       return;
     }
     setSelectedUser(user);
@@ -36,8 +36,7 @@ const PetFriendsPage = () => {
 
     const { kakao } = window;
     if (!kakao?.maps) return;
-    if (!signinedUser.userAddress?.jibunAddress || !nearUsers) return;
-
+    if (!signinedUser?.jibun_address || !nearUsers) return;
     initializeMap(
       kakao,
       nearUsers,
@@ -64,7 +63,7 @@ const PetFriendsPage = () => {
           <br />
           지금 시작 버튼을 눌러 반려동물의 새로운 친구를 만들어주세요!
         </p>
-        {!signinedUser.userAddress?.jibunAddress && (
+        {!signinedUser?.jibun_address && (
           <section className={styles.address_warning}>
             <h2>📍 주소 입력이 필요합니다.</h2>
             <p>서비스를 이용하려면 먼저 주소를 설정해주세요.</p>
@@ -81,12 +80,12 @@ const PetFriendsPage = () => {
         {selectedUser && (
           <section
             className={styles.selected_user_card}
-            onClick={() => navigate(`/chat/${selectedUser.nickName}`)}
+            onClick={() => navigate(`/chat/${selectedUser.nickname}`)}
           >
             <div className={styles.image_wrapper}>
               <img
                 src={
-                  selectedUser.userPet[0]?.image ||
+                  selectedUser.pets[0].image ||
                   selectedUser.profileImage ||
                   "/images/profile.png"
                 }
@@ -96,12 +95,11 @@ const PetFriendsPage = () => {
             </div>
             <div className={styles.user_info}>
               <h3 className={styles.user_name}>
-                {selectedUser.userPet[0]?.name ?? selectedUser.nickName}
+                {selectedUser.pets[0].name ?? selectedUser.nickname}
               </h3>
-              {selectedUser.userPet[0] && (
+              {selectedUser.pets[0] && (
                 <p className={styles.pet_details}>
-                  {selectedUser.userPet[0].breed} •{" "}
-                  {selectedUser.userPet[0].age}살
+                  {selectedUser.pets[0].breed} • {selectedUser.pets[0].age}살
                 </p>
               )}
             </div>
@@ -117,21 +115,19 @@ export default PetFriendsPage;
 const initializeMap = (
   kakao: any,
   nearUsers: UserType[],
-  signinedUser: AuthStore,
+  signinedUser: UserType,
   mapConatinerRef: React.RefObject<HTMLDivElement | null>,
   handleClickMarker: (user: UserType) => void
 ) => {
   if (!mapConatinerRef.current) return;
-
   const defaultPosition = new kakao.maps.LatLng(36.35, 127.384);
   const zoomLevel = nearUsers.length > 0 ? 5 : 14;
   const options = { center: defaultPosition, level: zoomLevel };
   const map = new kakao.maps.Map(mapConatinerRef.current, options);
 
   const bounds = new kakao.maps.LatLngBounds();
-
   nearUsers.forEach((user: UserType) => {
-    const isMe = user._id === signinedUser.userId;
+    const isMe = user.id === signinedUser.id;
     createMarker(kakao, map, user, bounds, isMe, handleClickMarker);
   });
 
@@ -147,8 +143,8 @@ const createMarker = (
   handleClickMarker: (user: UserType) => void
 ) => {
   const position = new kakao.maps.LatLng(
-    user.address.location.coordinates[1],
-    user.address.location.coordinates[0]
+    user.location_coordinates_lat,
+    user.location_coordinates_lng
   );
   const content = createCustomOverlayMarker(user, isMe, handleClickMarker);
   const customOverlay = new kakao.maps.CustomOverlay({
@@ -170,13 +166,12 @@ const createCustomOverlayMarker = (
   wrapper.className = isMe ? "my-marker" : "custom-marker";
 
   const img = document.createElement("img");
-  img.src =
-    user.userPet[0]?.image || user.profileImage || "/images/profile.png";
+  img.src = user.pets[0]?.image || user.profileImage || "/images/profile.png";
   img.alt = "유저이미지";
 
   const label = document.createElement("div");
   label.className = "marker-label";
-  label.innerText = user.userPet[0]?.name || user.nickName;
+  label.innerText = user.pets[0]?.name || user.nickname;
 
   wrapper.onclick = () => handleClickMarker(user);
 

@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import userAuthStore from "@/zustand/userAuth";
+import userAuthStore from "@/zustand/userStore";
 import { getWalks } from "@/apis/public.api";
 import styles from "./petWalkDetail.module.css";
 import { Button } from "@/components";
@@ -37,9 +37,7 @@ const PetWalkDetail = () => {
   return (
     <div className={styles.cardContainer}>
       <Helmet>
-        <title>{`${
-          userNickName ?? "사용자"
-        }님의 펫워크 | PetPle`}</title>
+        <title>{`${userNickName ?? "사용자"}님의 펫워크 | PetPle`}</title>
         <meta
           name="description"
           content={`${

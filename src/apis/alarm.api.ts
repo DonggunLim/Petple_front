@@ -1,6 +1,6 @@
 import baseInstance from "./axios";
 
-const getAlarmList = async (userId: string) => {
+const getAlarmList = async (userId: number) => {
   try {
     const response = await baseInstance.get(`/alarms?userId=${userId}`);
     return response.data.alarms;
@@ -9,17 +9,17 @@ const getAlarmList = async (userId: string) => {
   }
 };
 
-const updateAlarmRead = async (uid: number) => {
+const updateAlarmRead = async (id: number) => {
   try {
-    await baseInstance.patch(`/alarms?uid=${uid}`);
+    await baseInstance.patch(`/alarms/${id}`);
   } catch (error) {
     throw error;
   }
 };
 
-const deleteAlarm = async (uid: number) => {
+const deleteAlarm = async (id: number) => {
   try {
-    await baseInstance.delete(`/alarms?uid=${uid}`);
+    await baseInstance.delete(`/alarms/${id}`);
   } catch (error) {
     throw error;
   }

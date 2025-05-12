@@ -5,58 +5,52 @@ import { z } from "zod";
 export type ReplyType = {
   creatorId: string;
   name: string;
-  nickName: string;
+  nickname: string;
   profileImage: string;
   email: string;
   description: string;
   tag: string;
-  hasParent: boolean;
-  _id: string;
+  id: number;
   createdAt: Date;
 };
 
 export type CommentType = {
-  _id: string;
+  id: number;
+  post_id: number;
   creator: {
-    _id: string;
+    id: number;
     name: string;
     email: string;
-    nickName: string;
+    nickname: string;
     profileImage: string;
   };
-  post: PostItem;
-  description: string;
-  replies: ReplyType[];
-  hasParent: boolean;
-  createdAt: string;
+  content: string;
+  replies: CommentType[];
+  created_at: string;
 };
 
 export type PostFormData = {
   tags: Array<string>;
   images: Array<string>;
   description: string;
-  _id: string;
+  id: number;
 };
 
 export type PostItem = PostFormData & {
   creator: {
-    _id: string;
+    id: number;
     name: string;
     email: string;
-    nickName: string;
+    nickname: string;
     profileImage: string;
   };
-  comments: string[];
-  likes: string[];
+  commentsCount: number;
   likesCount: number;
-  createdAt: Date;
+  created_at: Date;
+  likedUserIds: number[];
 };
 
-export type CommentSubmitType =
-  | "ADD_COMMENT"
-  | "UPDATE_COMMENT"
-  | "ADD_REPLY"
-  | "UPDATE_REPLY";
+export type CommentSubmitType = "ADD_COMMENT" | "UPDATE_COMMENT";
 
 export type PostFormFields = z.infer<typeof postFormSchema>;
 export type CommentFormFields = z.infer<typeof CommentSchema>;

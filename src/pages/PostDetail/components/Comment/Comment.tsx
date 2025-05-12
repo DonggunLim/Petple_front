@@ -6,12 +6,11 @@ import { useEffect } from "react";
 
 interface CommentProps {
   comments: CommentType[];
-  postId: string;
+  postId: number;
 }
 
 const Comment = ({ comments, postId }: CommentProps) => {
   const { setPostId } = useCommentStore();
-
   useEffect(() => {
     setPostId(postId);
   }, [postId]);

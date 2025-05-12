@@ -1,23 +1,15 @@
-import {
-  addComment,
-  addReply,
-  deleteComment,
-  deleteReply,
-  updateComment,
-  updateReply,
-} from "@/apis/comment.api";
+import { addComment, deleteComment, updateComment } from "@/apis/comment.api";
 import useToast from "@/components/UI/Toast/hooks/useToast";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { AxiosError } from "axios";
 
 interface useCommentMutationProps {
-  postId: string | null;
+  postId: number | null;
 }
 
 const useCommentMutation = ({ postId }: useCommentMutationProps) => {
   const { toast } = useToast();
   const qc = useQueryClient();
-
   const onSuccess = () => {
     qc.invalidateQueries({ queryKey: ["Post", postId] });
   };
@@ -41,9 +33,6 @@ const useCommentMutation = ({ postId }: useCommentMutationProps) => {
       onSuccess,
       onError,
     }),
-    addReply: useMutation({ mutationFn: addReply, onSuccess, onError }),
-    deleteReply: useMutation({ mutationFn: deleteReply, onSuccess, onError }),
-    updateReply: useMutation({ mutationFn: updateReply, onSuccess, onError }),
   };
 };
 

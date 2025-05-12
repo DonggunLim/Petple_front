@@ -5,7 +5,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { useMemo } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { deletePostById } from "@/apis/post.api";
-import userAuthStore from "@/zustand/userAuth";
+import userStore from "@/zustand/userStore";
 import ClockIcon from "@/assets/icons/clock.svg?react";
 import LikeIcon from "@/assets/icons/like.svg?react";
 import CommentIcon from "@/assets/icons/comment.svg?react";
@@ -16,17 +16,18 @@ interface PostProps {
 }
 
 const CommunityPost = ({ post }: PostProps) => {
-  const { creator, images, tags, createdAt, _id, comments, likes } = post;
+  const { creator, images, tags, created_at, id, commentsCount, likesCount } =
+    post;
   return (
     <>
-      <div key={`post-item-${_id}`} className={styles.post}>
+      <div key={`post-item-${id}`} className={styles.post}>
         <PostHeader
           creator={creator}
           tags={tags}
-          createdAt={createdAt}
-          commentsCount={comments.length}
-          likesCount={likes.length}
-          postId={_id}
+          created_at={created_at}
+          commentsCount={commentsCount}
+          likesCount={likesCount}
+          postId={id}
         />
         {images.length > 0 && (
           <Carousel>
@@ -59,20 +60,19 @@ const CommunityPost = ({ post }: PostProps) => {
 export default CommunityPost;
 
 const PostHeader = (
-  data: Pick<PostItem, "creator" | "createdAt" | "tags"> & {
-    commentsCount: number;
+  data: Pick<PostItem, "creator" | "created_at" | "tags" | "commentsCount"> & {
     likesCount: number;
-    postId: string;
+    postId: number;
   }
 ) => {
   const location = useLocation();
   const navigate = useNavigate();
-  const { userId } = userAuthStore();
-  const { creator, tags, createdAt, commentsCount, likesCount, postId } = data;
+  const { user } = userStore();
+  const { creator, tags, created_at, commentsCount, likesCount, postId } = data;
   const qc = useQueryClient();
 
   const isEditablePost = useMemo(
-    () => location.pathname.includes("post") && creator._id === userId,
+    () => location.pathname.includes("post") && creator.id === user?.id,
     [location]
   );
   const { mutate: deletePostMutate } = useMutation({
@@ -98,12 +98,12 @@ const PostHeader = (
         <div className={styles.post_header_userinfo_right}>
           <p className={styles.username}>
             {creator.name}
-            <span className={styles.nickname}>{creator.nickName}</span>
+            <span className={styles.nickname}>{creator.nickname}</span>
           </p>
           <div className={styles.icons_list}>
             <div className={styles.createdAt}>
               <ClockIcon className={styles.icon} />
-              {new Date(createdAt).toLocaleDateString()}
+              {new Date(created_at).toLocaleDateString()}
             </div>
             <div className={styles.createdAt}>
               <CommentIcon className={styles.icon} />

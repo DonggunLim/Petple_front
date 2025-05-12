@@ -1,4 +1,4 @@
-import userAuthStore from "@/zustand/userAuth";
+import userStore from "@/zustand/userStore";
 import style from "./menu.module.css";
 import { useNavigate } from "react-router-dom";
 import { useMemo } from "react";
@@ -7,24 +7,15 @@ import { Button } from "@/components";
 import { logout } from "@/apis/profile.api";
 
 const Menu = () => {
-  const user = userAuthStore();
-  const { userImage, userNickName } = user;
-  const isLoggined = useMemo(() => {
-    return user.userId !== null;
-  }, [user.userId]);
+  const { user, clearUser } = userStore();
+  const isLoggined = useMemo(() => !!user, [user]);
   const navigate = useNavigate();
 
   const handleLogout = async () => {
     try {
       const response = await logout();
       if (response) {
-        userAuthStore.setState({
-          userId: null,
-          userEmail: null,
-          userNickName: "",
-          userImage: null,
-          userPet: null,
-        });
+        clearUser();
         navigate("/login");
       }
     } catch (error) {
@@ -40,8 +31,8 @@ const Menu = () => {
             className={style.profile_user}
             onClick={() => navigate("/profile")}
           >
-            <img src={userImage || "/images/profile.png"} />
-            <p>{userNickName}</p>
+            <img src={user?.profileImage || "/images/profile.png"} />
+            <p>{user?.profileImage}</p>
           </div>
           <div>
             <Button onClick={() => handleLogout()}>LOGOUT</Button>

@@ -30,12 +30,17 @@ const AddressForm: FC<AddressFormProps> = ({
       return;
     }
 
-    const address: AddressType = {
-      jibunAddress: data.address,
-      location: {
-        type: "Point",
-        coordinates: [coordinate.x, coordinate.y],
-      },
+    // const address: AddressType = {
+    //   jibunAddress: data.address,
+    //   location: {
+    //     type: "Point",
+    //     coordinates: [coordinate.x, coordinate.y],
+    //   },
+    // };
+    const address = {
+      jibun_address: data.address,
+      lng: coordinate.x,
+      lat: coordinate.y,
     };
 
     onSelectAddress(address);

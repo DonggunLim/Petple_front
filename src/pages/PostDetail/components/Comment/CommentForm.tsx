@@ -4,78 +4,59 @@ import { CommentFormFields } from "@/types/post.type";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { CommentSchema } from "@/consts/zodSchema";
-import userAuthStore from "@/zustand/userAuth";
+import userStore from "@/zustand/userStore";
 import useCommentMutation from "@/hooks/useCommentMutation";
 import { useCommentStore } from "@/zustand/commentStore";
 import { useEffect } from "react";
 import useToast from "@/components/UI/Toast/hooks/useToast";
 
 interface CommentFormProps {
-  postId: string;
+  postId: number;
 }
 
 const CommentForm = ({ postId }: CommentFormProps) => {
   const { toast } = useToast();
-  const { submitType, targetComment, targetReply, initState, setResetForm } =
+  const { submitType, targetComment, initState, setResetForm } =
     useCommentStore();
-  const user = userAuthStore();
+  const { user } = userStore();
   const { register, handleSubmit, setValue, resetField } =
     useForm<CommentFormFields>({
       defaultValues: {
-        description: "",
+        content: "",
       },
       resolver: zodResolver(CommentSchema),
       mode: "onSubmit",
     });
-  const { addComment, addReply, updateComment, updateReply } =
-    useCommentMutation({ postId });
+  const { addComment, updateComment } = useCommentMutation({ postId });
 
-  const onSubmit = ({ description }: CommentFormFields) => {
+  const onSubmit = ({ content }: CommentFormFields) => {
     if (!user) {
       toast({ type: "INFO", description: "로그인이 필요합니다." });
       return;
     }
     if (submitType === "ADD_COMMENT") {
-      addComment.mutate({ description, postId, hasParent: false });
-    }
-    if (submitType === "ADD_REPLY" && targetComment) {
-      addReply.mutate({
-        targetCommentId: targetComment._id,
-        description,
-        tag: targetComment.creator._id,
+      addComment.mutate({
+        content,
+        postId,
+        parentId: targetComment?.id ?? null,
       });
     }
-    if (submitType === "UPDATE_COMMENT" && targetComment?._id) {
-      updateComment.mutate({ _id: targetComment?._id, description, postId });
+
+    if (submitType === "UPDATE_COMMENT" && targetComment?.id) {
+      updateComment.mutate({ id: targetComment.id, content });
     }
-    if (
-      submitType === "UPDATE_REPLY" &&
-      targetReply?._id &&
-      targetComment?._id
-    ) {
-      updateReply.mutate({
-        description,
-        commentId: targetComment?._id,
-        replyId: targetReply?._id,
-      });
-    }
+
     initState();
-    resetField("description");
+    resetField("content");
   };
 
-  const resetDescriptionFiedls = () => resetField("description");
+  const resetDescriptionFiedls = () => resetField("content");
 
   useEffect(() => {
-    if (targetComment?.description) {
-      setValue("description", targetComment?.description);
+    if (targetComment?.content) {
+      setValue("content", targetComment?.content);
     }
-  }, [targetComment?.description]);
-
-  useEffect(() => {
-    if (targetReply?.description) {
-      setValue("description", targetReply.description);
-    }
-  }, [targetReply?.description]);
+  }, [targetComment?.content]);
 
   useEffect(() => setResetForm(resetDescriptionFiedls), []);
 
@@ -83,13 +64,13 @@ const CommentForm = ({ postId }: CommentFormProps) => {
     <form className={styles.comment_submit_form}>
       {targetComment && (
         <p className={styles.target_comment}>
-          @{targetComment.creator.nickName}
+          @{targetComment.creator.nickname}
         </p>
       )}
       <div className={styles.comment_input}>
         <input
           type="text"
-          {...register("description")}
+          {...register("content")}
           placeholder="댓글을 작성해보세요."
         />
         <Button label="댓글" onClick={handleSubmit(onSubmit)} />

@@ -1,6 +1,6 @@
 import { ChangeEvent, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
-import userAuthStore from "@/zustand/userAuth";
+import userStore from "@/zustand/userStore";
 import style from "./createPetProfile.module.css";
 import { Button } from "@/components";
 import { useNavigate } from "react-router-dom";
@@ -21,7 +21,7 @@ const petDefaultValues = {
 
 type PetSchema = z.infer<typeof petSchema>;
 const CreatePetProfile = () => {
-  const { userId, setUserPet, userPet } = userAuthStore();
+  const { user, setUser } = userStore();
   const navigate = useNavigate();
   const [previewImg, setPreviewImg] = useState<string>("/images/dog.png");
   const [file, setFile] = useState<File | null>(null);
@@ -66,7 +66,7 @@ const CreatePetProfile = () => {
     imageUrl = await imageUpload(file);
 
     try {
-      const response = await createPet(userId!, petData, imageUrl);
+      const response = await createPet(user?.id!, petData, imageUrl);
 
       if (response) {
         toast({
@@ -77,13 +77,13 @@ const CreatePetProfile = () => {
         navigate("/profile");
 
         const newPet = {
-          _id: response.id,
+          id: response.id,
           name: response.name,
           age: response.age,
           breed: response.breed,
           image: response.image,
         };
-        setUserPet([...(userPet || []), newPet]);
+        setUser({ pets: [...(user?.pets || []), newPet] });
       }
     } catch (error) {
       console.error("반려동물 정보 저장 실패", error);

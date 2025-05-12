@@ -1,4 +1,11 @@
+.wrapper {
+  padding-top: 37px;
+  padding-bottom: 4px;
+}
+
 .chat_list {
   display: flex;
   flex-direction: column;
+  gap: 4px;
+  padding: 0 8px;
 }

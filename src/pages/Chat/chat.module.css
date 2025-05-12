@@ -3,26 +3,3 @@
   display: flex;
   flex-direction: column;
 }
-
-.chat_header {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-  padding: 10px 0;
-  border-bottom: 1px solid #ddd;
-}
-
-.back_button {
-  position: absolute;
-  left: 10px;
-  cursor: pointer;
-  width: 16px;
-  height: 16px;
-  padding: 2px 0px;
-}
-
-.back_button > img {
-  width: 100%;
-  height: 100%;
-}

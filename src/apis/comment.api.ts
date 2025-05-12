@@ -1,9 +1,9 @@
 import baseInstance from "./axios";
 
 const addComment = async (data: {
-  postId: string;
-  description: string;
-  hasParent: boolean;
+  postId: number;
+  parentId: number | null;
+  content: string;
 }) => {
   try {
     await baseInstance.post("/comments", data);
@@ -12,73 +12,22 @@ const addComment = async (data: {
   }
 };
 
-const deleteComment = async (data: { postId: string; commentId: string }) => {
+const deleteComment = async (commentId: number) => {
   try {
-    await baseInstance.delete(
-      `/posts/${data.postId}/comments/${data.commentId}`
-    );
+    await baseInstance.delete(`/comments/${commentId}`);
   } catch (error) {
     throw error;
   }
 };
 
-const updateComment = async (data: {
-  _id: string;
-  description: string;
-  postId: string;
-}) => {
+const updateComment = async (data: { id: number; content: string }) => {
   try {
-    await baseInstance.patch(`/comments/${data._id}`, {
-      description: data.description,
-      postId: data.postId,
+    await baseInstance.put(`/comments/${data.id}`, {
+      content: data.content,
     });
   } catch (error) {
     throw error;
   }
 };
 
-const addReply = async (data: {
-  targetCommentId: string;
-  description: string;
-  tag: string;
-}) => {
-  try {
-    await baseInstance.post("/comments/replies", data);
-  } catch (error) {
-    throw error;
-  }
-};
-
-const deleteReply = async (data: { commentId: string; replyId: string }) => {
-  try {
-    await baseInstance.delete(
-      `/comments/${data.commentId}/replies/${data.replyId}`
-    );
-  } catch (error) {
-    throw error;
-  }
-};
-
-const updateReply = async (data: {
-  description: string;
-  commentId: string;
-  replyId: string;
-}) => {
-  try {
-    await baseInstance.patch(
-      `/comments/${data.commentId}/replies/${data.replyId}`,
-      { description: data.description }
-    );
-  } catch (error) {
-    throw error;
-  }
-};
-
-export {
-  addComment,
-  deleteComment,
-  updateComment,
-  addReply,
-  deleteReply,
-  updateReply,
-};
+export { addComment, deleteComment, updateComment };
