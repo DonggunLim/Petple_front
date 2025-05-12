@@ -1,4 +1,4 @@
-import userAuthStore from "@/zustand/userStore";
+import userStore from "@/zustand/userStore";
 import axios, { AxiosError } from "axios";
 
 const baseInstance = axios.create({
@@ -27,13 +27,7 @@ baseInstance.interceptors.response.use(
         case 401:
           console.error(message ?? "인증 실패: 권한이 없습니다.");
 
-          userAuthStore.setState({
-            userId: null,
-            userEmail: null,
-            userNickName: null,
-            userImage: null,
-            userPet: null,
-          });
+          userStore.getState().clearUser();
           localStorage.clear();
 
           window.location.href = "/login";

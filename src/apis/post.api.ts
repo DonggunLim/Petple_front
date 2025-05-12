@@ -19,7 +19,7 @@ const getPopularPost = async () => {
   }
 };
 
-const getPostById = async (id: string) => {
+const getPostById = async (id: number) => {
   try {
     const response = await baseInstance.get(`/posts/post/${id}`);
     return response.data.post;

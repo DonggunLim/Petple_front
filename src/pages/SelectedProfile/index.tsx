@@ -47,7 +47,7 @@ const SelectedProfile = () => {
             {user?.userPet?.map((pet, index) => (
               <Carousel.Item key={index} index={index}>
                 <SelectedUserPetForm
-                  _id={pet._id}
+                  id={pet.id}
                   name={pet.name}
                   age={pet.age}
                   image={pet.image}

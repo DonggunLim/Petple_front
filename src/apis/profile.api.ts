@@ -63,7 +63,7 @@ const updateUserInfo = async (
   }
 };
 
-const createPet = async (userId: string, petData: any, imageUrl: string) => {
+const createPet = async (userId: number, petData: any, imageUrl: string) => {
   try {
     const response = await baseInstance.post("/my/pet/create", {
       userId,
@@ -78,16 +78,16 @@ const createPet = async (userId: string, petData: any, imageUrl: string) => {
 };
 
 const updatePetInfo = async (
-  userId: string,
+  userId: number,
   petData: any,
-  _id: string,
+  id: string,
   imageUrl: string
 ) => {
   const { name, breed, age } = petData;
   try {
-    const response = await baseInstance.post(`/my/pet/${_id}`, {
+    const response = await baseInstance.post(`/my/pet/${id}`, {
       userId,
-      petId: _id,
+      petId: id,
       name,
       age,
       breed,
@@ -100,12 +100,12 @@ const updatePetInfo = async (
   }
 };
 
-const deletePet = async (userId: string, _id: string) => {
+const deletePet = async (userId: number, id: string) => {
   try {
-    const response = await baseInstance.delete(`/my/pet/${_id}`, {
+    const response = await baseInstance.delete(`/my/pet/${id}`, {
       data: {
         userId: userId,
-        petId: _id,
+        petId: id,
       },
     });
 

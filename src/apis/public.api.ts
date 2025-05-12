@@ -1,5 +1,11 @@
 import baseInstance from "./axios";
-import { PlaceInfo, FuneralService, MedicalService, FoodService, WalkData } from "@/types/petApi.type";
+import {
+  PlaceInfo,
+  FuneralService,
+  MedicalService,
+  FoodService,
+  WalkData,
+} from "@/types/petApi.type";
 
 const getFuneralData = async (region: string): Promise<FuneralService[]> => {
   try {
@@ -42,9 +48,12 @@ const getPlaceDetail = async (id: string) => {
   } catch (error) {
     throw error;
   }
-}
+};
 
-const getPetFood = async (search?: string, category?: string): Promise<FoodService[]> => {
+const getPetFood = async (
+  search?: string,
+  category?: string
+): Promise<FoodService[]> => {
   try {
     const params: Record<string, string> = {};
 
@@ -68,7 +77,7 @@ const postWalkData = async (walkData: WalkData): Promise<boolean> => {
   }
 };
 
-const getWalks = async (userId: string): Promise<WalkData[]> => {
+const getWalks = async (userId: number): Promise<WalkData[]> => {
   try {
     const response = await baseInstance.get(`/public/walks/${userId}`);
     return response.data?.walks || [];
@@ -77,4 +86,12 @@ const getWalks = async (userId: string): Promise<WalkData[]> => {
   }
 };
 
-export { getFuneralData, getMedicalData, getPlacesData, getPlaceDetail, getPetFood, postWalkData, getWalks };
+export {
+  getFuneralData,
+  getMedicalData,
+  getPlacesData,
+  getPlaceDetail,
+  getPetFood,
+  postWalkData,
+  getWalks,
+};

@@ -5,7 +5,6 @@ import style from "./createPetProfile.module.css";
 import { Button } from "@/components";
 import { useNavigate } from "react-router-dom";
 import { imageUpload } from "@/utils/imageUpload";
-// import dog from "/images/dog.png";
 import { Pet } from "@/types/user.type";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { petSchema } from "@/consts/zodSchema";

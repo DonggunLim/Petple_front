@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import userAuthStore from "@/zustand/userStore";
+import userStore from "@/zustand/userStore";
 import { getWalks } from "@/apis/public.api";
 import styles from "./petWalkDetail.module.css";
 import { Button } from "@/components";
@@ -11,23 +11,23 @@ import Pagination from "@/components/UI/Pagination";
 import { Helmet } from "react-helmet-async";
 
 const PetWalkDetail = () => {
-  const { userId, userNickName } = userAuthStore();
+  const { user } = userStore();
   const navigate = useNavigate();
   const { toast } = useToast();
 
   useEffect(() => {
-    if (!userId) {
+    if (!user?.id) {
       toast({ type: "ERROR", description: "로그인이 필요합니다." });
       navigate("/login");
     }
-  }, [userId, navigate]);
+  }, [user?.id, navigate]);
 
-  if (!userId) return null;
+  if (!user?.id) return null;
 
   const { data: walks = [] } = useQuery({
-    queryKey: ["walks", userId],
-    queryFn: () => (userId ? getWalks(userId) : Promise.resolve([])),
-    enabled: !!userId,
+    queryKey: ["walks", user.id],
+    queryFn: () => (user.id ? getWalks(user?.id) : Promise.resolve([])),
+    enabled: !!user.id,
   });
 
   // 페이지네이션 훅 적용
@@ -37,11 +37,11 @@ const PetWalkDetail = () => {
   return (
     <div className={styles.cardContainer}>
       <Helmet>
-        <title>{`${userNickName ?? "사용자"}님의 펫워크 | PetPle`}</title>
+        <title>{`${user.nickname ?? "사용자"}님의 펫워크 | PetPle`}</title>
         <meta
           name="description"
           content={`${
-            userNickName ?? "사용자"
+            user.nickname ?? "사용자"
           }님의 반려동물 산책 기록을 확인할 수 있습니다.`}
         />
       </Helmet>

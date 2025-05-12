@@ -22,7 +22,7 @@ const PostUpdatePage = () => {
   const qc = useQueryClient();
   const { data: post } = useSuspenseQuery({
     queryKey: ["post", id],
-    queryFn: () => id && getPostById(id),
+    queryFn: () => id && getPostById(Number(id)),
     gcTime: 0,
   });
 
@@ -61,10 +61,15 @@ const PostUpdatePage = () => {
     const filterdFile = images.filter((image) => image instanceof File);
     const uploadedImages = await uploadImages(filterdFile);
     const updatedImages = [...convertedImage, ...uploadedImages];
-    await submitForm({ id, tags, images: updatedImages, description });
+    await submitForm({
+      id: Number(id),
+      tags,
+      images: updatedImages,
+      description,
+    });
   };
 
-  const handleDeletePost = () => id && deletePost(id);
+  const handleDeletePost = () => id && deletePost(Number(id));
 
   useEffect(() => {
     if (post?.creator.id !== user?.id) {

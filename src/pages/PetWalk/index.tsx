@@ -6,7 +6,7 @@ import styles from "./petWalk.module.css";
 import Map from "@/components/Map";
 import { WalkData } from "@/types/petApi.type";
 import { postWalkData } from "@/apis/public.api";
-import userAuthStore from "@/zustand/userStore";
+import userStore from "@/zustand/userStore";
 import useToast from "@/components/UI/Toast/hooks/useToast";
 
 const PetWalk = () => {
@@ -27,7 +27,7 @@ const PetWalk = () => {
   } | null>(null);
   const navigate = useNavigate();
 
-  const { userId, userPet } = userAuthStore();
+  const { user } = userStore();
   const { toast } = useToast();
 
   const mutation = useMutation({
@@ -68,7 +68,7 @@ const PetWalk = () => {
   };
 
   const startTracking = () => {
-    if (!userId) {
+    if (!user?.id) {
       toast({ type: "INFO", description: "로그인이 필요합니다." });
       navigate("/login");
       return;
@@ -121,7 +121,7 @@ const PetWalk = () => {
   };
 
   const stopTracking = () => {
-    if (!userId) {
+    if (!user?.id) {
       toast({ type: "INFO", description: "로그인이 필요합니다." });
       return;
     }
@@ -140,9 +140,9 @@ const PetWalk = () => {
     navigator.geolocation.getCurrentPosition(
       (position) => {
         const selectedPetId =
-          userPet?.find((pet) => pet._id === selectedPet)?._id || "";
+          user.pets?.find((pet) => pet.id === selectedPet)?.id || "";
         const walkData: WalkData = {
-          user: userId,
+          user: user.id,
           pet: selectedPetId,
           startTime: startTime ?? new Date().toISOString(),
           startLocation: startLocation ?? {
@@ -167,7 +167,7 @@ const PetWalk = () => {
   };
 
   const handleClickList = () => {
-    if (!userId) {
+    if (!user?.id) {
       // alert("로그인이 필요합니다.");
       toast({ type: "INFO", description: "로그인이 필요합니다." });
       navigate("/login");
@@ -200,8 +200,8 @@ const PetWalk = () => {
           <option value="" disabled>
             반려동물 선택
           </option>
-          {userPet?.map((pet) => (
-            <option key={pet._id} value={pet._id}>
+          {user?.pets?.map((pet) => (
+            <option key={pet.id} value={pet.id}>
               {pet.name}
             </option>
           ))}

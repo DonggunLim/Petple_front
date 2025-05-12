@@ -60,19 +60,19 @@ export interface FoodService {
 }
 
 export interface WalkData {
-  user: string;
+  user: number;
   pet: string;
-  petName?: string; 
+  petName?: string;
   userProfileImage?: string;
   petImage?: string;
-  startTime: string | Date; 
+  startTime: string | Date;
   startLocation: {
     address: string;
     buildingName: string;
     lat: number;
     lng: number;
   };
-  endTime: string | Date; 
+  endTime: string | Date;
   endLocation: {
     address: string;
     buildingName: string;

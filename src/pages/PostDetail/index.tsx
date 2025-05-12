@@ -24,7 +24,7 @@ const PostDetailPage = () => {
   const { id: postId } = useParams();
   const { data: post } = useSuspenseQuery({
     queryKey: ["Post", Number(postId)],
-    queryFn: () => postId && getPostById(postId),
+    queryFn: () => postId && getPostById(Number(postId)),
   });
 
   const currentLikeStatus = useMemo(
