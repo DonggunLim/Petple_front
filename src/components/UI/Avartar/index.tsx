@@ -22,7 +22,6 @@ const Avartar: FC<AvartarProps> = (props) => {
   const { user } = userStore();
   const { nickname } = useParams<string>();
   const navigate = useNavigate();
-  const profileImage = creator?.profileImage;
 
   const handleAvatarClick = async () => {
     if (!creator) return;
@@ -37,9 +36,12 @@ const Avartar: FC<AvartarProps> = (props) => {
     <>
       <a onClick={onClick || handleAvatarClick} className={style.a}>
         <img
-          src={profileImage || image || "/images/profile.png"}
+          src={image}
+          onError={(e) => (e.currentTarget.src = "/images/profile.png")}
           className={`${style.image} ${className}`}
-          alt={alt || "프로필 이미지"}
+          alt={alt ?? "프로필 이미지"}
+          loading="lazy"
+          decoding="async"
         />
       </a>
     </>

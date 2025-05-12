@@ -51,7 +51,7 @@ const Header = () => {
               <li>
                 <Avartar
                   onClick={() => navigate("/profile")}
-                  image={user?.profileImage!}
+                  image={user?.profileImage}
                   className={style.avartar}
                 />
               </li>

@@ -1,6 +1,6 @@
 import baseInstance from "./axios";
 
-const getAlarmList = async (userId: string) => {
+const getAlarmList = async (userId: number) => {
   try {
     const response = await baseInstance.get(`/alarms?userId=${userId}`);
     return response.data.alarms;
