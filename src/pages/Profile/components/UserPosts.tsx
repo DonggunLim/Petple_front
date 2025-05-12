@@ -62,9 +62,9 @@ const UserPosts = () => {
           {posts.length > 0 ? (
             posts.map((post) => (
               <div
-                key={post._id}
+                key={post.id}
                 className={style.pennel_img_div}
-                onClick={() => navigate(`/community/post/${post._id}`)}
+                onClick={() => navigate(`/community/post/${post.id}`)}
               >
                 {post.images.length > 0 ? (
                   <img
@@ -79,11 +79,11 @@ const UserPosts = () => {
                 <div className={style.info}>
                   <div className={style.comment}>
                     <img src={"/images/comment_white.png"} alt="게시물 댓글" />
-                    {post.comments.length}
+                    {post.commentsCount}
                   </div>
                   <div className={style.likes}>
                     <img src={"/images/like_white.png"} alt="게시물 좋아요" />
-                    {post.likes.length}
+                    {post.likesCount}
                   </div>
                 </div>
               </div>
@@ -111,9 +111,9 @@ const UserPosts = () => {
           {likePosts.length > 0 ? (
             likePosts.map((post) => (
               <div
-                key={post._id}
+                key={post.id}
                 className={style.pennel_img_div}
-                onClick={() => navigate(`/community/post/${post._id}`)}
+                onClick={() => navigate(`/community/post/${post.id}`)}
               >
                 {post.images.length > 0 ? (
                   <img
@@ -131,11 +131,11 @@ const UserPosts = () => {
                       src={"/images/comment_white.png"}
                       alt="게시물 이미지"
                     />
-                    {post.comments.length}
+                    {post.commentsCount}
                   </div>
                   <div className={style.likes}>
                     <img src={"/images/like_white.png"} alt="게시물 댓글" />
-                    {post.likes.length}
+                    {post.likesCount}
                   </div>
                 </div>
               </div>
