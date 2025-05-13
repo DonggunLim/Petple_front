@@ -14,7 +14,6 @@ const Profile = () => {
   const handleAddPetProfile = () => {
     navigate("/createpet");
   };
-
   return (
     <div className={style.profile_total_wrap}>
       <UserProfileForm />
@@ -32,8 +31,8 @@ const Profile = () => {
         </div>
         <Carousel className={style.carousel}>
           <Carousel.ItemList>
-            {user?.pets?.map((pet, index) => (
-              <Carousel.Item key={index} index={index}>
+            {user?.pets.map((pet, index) => (
+              <Carousel.Item key={pet.id} index={index}>
                 <PetForm
                   id={pet.id}
                   name={pet.name}

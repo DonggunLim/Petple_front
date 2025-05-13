@@ -52,6 +52,7 @@ const CreatePetProfile = () => {
   };
 
   const onSubmit = async (petData: Pet) => {
+    if (!user?.id) return;
     let imageUrl = "";
 
     if (!file) {
@@ -65,9 +66,8 @@ const CreatePetProfile = () => {
     imageUrl = await imageUpload(file);
 
     try {
-      const response = await createPet(user?.id!, petData, imageUrl);
-
-      if (response) {
+      const petId = await createPet(user?.id, petData, imageUrl);
+      if (petId) {
         toast({
           type: "SUCCESS",
           description: "반려동물 프로필이 저장되었습니다.",
@@ -76,11 +76,11 @@ const CreatePetProfile = () => {
         navigate("/profile");
 
         const newPet = {
-          id: response.id,
-          name: response.name,
-          age: response.age,
-          breed: response.breed,
-          image: response.image,
+          id: petId,
+          name: petData.name,
+          age: petData.age,
+          breed: petData.breed,
+          image: imageUrl,
         };
         setUser({ pets: [...(user?.pets || []), newPet] });
       }

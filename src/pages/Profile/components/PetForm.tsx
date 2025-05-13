@@ -58,6 +58,7 @@ const PetForm: FC<PetInfoProps> = (props) => {
   };
 
   const onSubmit = async (petData: Pet) => {
+    if (!id) return;
     if (
       name === petData.name &&
       age === petData.age &&
@@ -69,38 +70,30 @@ const PetForm: FC<PetInfoProps> = (props) => {
     }
 
     let imageUrl = previewImg;
-
     try {
       if (file) {
         imageUrl = await imageUpload(file);
       }
-    } catch (error) {
-      console.error(error);
-    }
-    const updatedPet = await updatePetInfo(petData, id!, imageUrl);
-
-    if (updatedPet) {
+      await updatePetInfo(petData, id, imageUrl);
       const updatePetList = user?.pets.map((pet) =>
-        pet.id === updatedPet.id
+        pet.id === id
           ? {
               ...pet,
               name: petData.name,
-              age: petData.breed,
+              age: petData.age,
               breed: petData.breed,
               image: imageUrl,
             }
           : pet
       );
-
-      if (updatePetList) {
-        setUser({ pets: updatePetList });
-
-        toast({
-          type: "SUCCESS",
-          description: "반려동물 프로필이 업데이트되었습니다.",
-        });
-        setEdit(false);
-      }
+      setUser({ pets: updatePetList });
+      toast({
+        type: "SUCCESS",
+        description: "반려동물 프로필이 업데이트되었습니다.",
+      });
+      setEdit(false);
+    } catch (error) {
+      console.error(error);
     }
   };
 
@@ -134,7 +127,6 @@ const PetForm: FC<PetInfoProps> = (props) => {
     });
     setPreviewImg(image || "");
   };
-  console.log(edit);
   return (
     <div className={style.petForm_total_wrap}>
       <form onSubmit={handleSubmit(onSubmit)} className={style.form}>

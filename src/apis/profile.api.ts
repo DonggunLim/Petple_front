@@ -70,8 +70,7 @@ const createPet = async (userId: number, petData: any, imageUrl: string) => {
       formData: petData,
       image: imageUrl,
     });
-
-    return response.data.pet;
+    return response.data.petId;
   } catch (error) {
     throw error;
   }
