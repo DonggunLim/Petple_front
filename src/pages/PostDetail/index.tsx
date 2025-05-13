@@ -75,7 +75,6 @@ const PostDetailPage = () => {
           content={`${post.tags.join("")}에 대한 게시글`}
         />
       </Helmet>
-      <Header />
       <CommunityPost post={post} />
       <div className={styles.description}>{post.description}</div>
       <LikeButton
