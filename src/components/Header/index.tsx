@@ -25,11 +25,11 @@ const Header = () => {
   };
 
   useEffect(() => {
-    if (user) {
+    if (user?.id) {
       getAlarmList(user.id) //
         .then(addAlarm);
     }
-  }, [user]);
+  }, [user?.id]);
 
   return (
     <header className={style.total_wrap}>
