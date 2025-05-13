@@ -1,6 +1,6 @@
 import { useForm } from "react-hook-form";
 import userStore from "@/zustand/userStore";
-import { Button } from "@/components";
+import { Avartar, Button } from "@/components";
 import { ChangeEvent, useEffect, useRef, useState } from "react";
 import style from "@/pages/Profile/profile.module.css";
 import { imageUpload } from "@/utils/imageUpload";
@@ -197,9 +197,9 @@ const UserProfileForm = () => {
             alt="뒤로가기"
           />
           <li className={style.img_wrap}>
-            <img
+            <Avartar
               onClick={handleClickFile}
-              src={previewImg}
+              image={previewImg}
               className={style.img}
               alt="프로필 이미지 선택"
             />
@@ -254,11 +254,7 @@ const UserProfileForm = () => {
       ) : (
         <ul className={style.userUl}>
           <div className={style.userUl_div}>
-            <img
-              src={previewImg}
-              className={style.basic_img}
-              alt="프로필 이미지"
-            />
+            <Avartar image={user?.profileImage} className={style.basic_img} />
             <div className={style.userName_box}>
               <p>{user?.nickname}</p>
               <img

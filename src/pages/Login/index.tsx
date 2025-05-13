@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import style from "./signup.module.css";
 import Kakao from "@/assets/icons/btn_kakao.svg?react";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import { fetchGoolgeCallback } from "@/apis/login.api";
+import { fetchGoolgeCallback, signinWithGuest } from "@/apis/login.api";
 
 const Login = () => {
   const [searchParams] = useSearchParams();
@@ -24,6 +24,14 @@ const Login = () => {
   const handleNaverLogin = () => {
     window.alert("현재 배포 상태에서는 구글 로그인만 사용가능합니다.");
     // window.location.href = "/api/oauth/naver";
+  };
+
+  const handleGuestLogin = () => {
+    signinWithGuest() //
+      .then(() => {
+        localStorage.loginStatus = "true";
+        navigate("/", { replace: true });
+      });
   };
 
   useEffect(() => {
@@ -61,6 +69,9 @@ const Login = () => {
           <div className={style.oauth}>
             <p>sns로 로그인하기</p>
           </div>
+          <p className={style.guestLogin} onClick={handleGuestLogin}>
+            🚀 게스트 로그인하기
+          </p>
         </ul>
       </div>
     </div>

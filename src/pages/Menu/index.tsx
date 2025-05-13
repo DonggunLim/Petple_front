@@ -2,7 +2,6 @@ import userStore from "@/zustand/userStore";
 import style from "./menu.module.css";
 import { useNavigate } from "react-router-dom";
 import { useMemo } from "react";
-// import profileImg from "/images/profile.png";
 import { Button } from "@/components";
 import { logout } from "@/apis/profile.api";
 
@@ -32,7 +31,7 @@ const Menu = () => {
             onClick={() => navigate("/profile")}
           >
             <img src={user?.profileImage || "/images/profile.png"} />
-            <p>{user?.profileImage}</p>
+            <p>{user?.nickname}</p>
           </div>
           <div>
             <Button onClick={() => handleLogout()}>LOGOUT</Button>

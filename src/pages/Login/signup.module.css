@@ -98,11 +98,6 @@
 }
 
 .googleBtn {
-  /* cursor: pointer;
-  display: flex;
-  justify-content: center;
-  width: 160px;
-  margin: 0 auto; */
   width: 45px;
 }
 
@@ -130,4 +125,16 @@
   display: flex;
   gap: 20px;
   justify-content: center;
+}
+
+.guestLogin {
+  font-size: 13px;
+  color: #3a3a3a;
+  text-align: center;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.guestLogin:hover {
+  color: #002daa;
 }

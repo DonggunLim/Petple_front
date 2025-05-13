@@ -11,4 +11,13 @@ const fetchGoolgeCallback = async (code: string) => {
   }
 };
 
-export { fetchGoolgeCallback };
+const signinWithGuest = async () => {
+  try {
+    const response = await baseInstance.get("my/guest-signin");
+    return response;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export { fetchGoolgeCallback, signinWithGuest };
