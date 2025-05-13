@@ -8,6 +8,7 @@ import {
   useRef,
   useMemo,
   TouchEvent,
+  useEffect,
 } from "react";
 import CarouselItemList from "./CarouselItemList";
 import CarouselItem from "./CarouselItem";
@@ -87,6 +88,10 @@ const Carousel: FC<CarouselProps> & CarouselCompoundProps = ({
     itemLength,
     setItemLength,
   };
+
+  useEffect(() => {
+    setCarouselIndex(0);
+  }, [itemLength]);
 
   const carouselCls = useMemo(() => {
     return `${styles.carouselContainer} ${className || ""}`.trim();

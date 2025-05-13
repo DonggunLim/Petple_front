@@ -8,13 +8,16 @@ interface CarouselItemProps {
   className?: string;
 }
 
-const CarouselItem: FC<CarouselItemProps> = ({ children, index, className }) => {
+const CarouselItem: FC<CarouselItemProps> = ({
+  children,
+  index,
+  className,
+}) => {
   const { carouselIndex } = useCarouselContext();
 
   const carouselItemCls = useMemo(() => {
     return `${styles.carouselItem} ${className || ""}`.trim();
   }, [className]);
-
   if (carouselIndex !== index) {
     return null;
   }
