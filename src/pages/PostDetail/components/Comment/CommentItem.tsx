@@ -1,7 +1,7 @@
 import styles from "./comment.module.css";
 import { Avartar } from "@/components";
 import { CommentType } from "@/types/post.type";
-import userStore from "@/zustand/userStore";
+import useUserStore from "@/zustand/userStore";
 import { useMemo } from "react";
 import ReplyList from "../Reply/ReplyList";
 import { useCommentStore } from "@/zustand/commentStore";
@@ -12,7 +12,7 @@ interface CommentItemProps {
 }
 const CommentItem = ({ comment }: CommentItemProps) => {
   const { creator, created_at } = comment;
-  const { user: signinedUser } = userStore();
+  const { user: signinedUser } = useUserStore();
   const { postId, setTargetComment, setSubmitType, initState, resetForm } =
     useCommentStore();
   const { deleteComment } = useCommentMutation({ postId });

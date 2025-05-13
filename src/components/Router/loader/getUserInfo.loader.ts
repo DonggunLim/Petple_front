@@ -1,5 +1,5 @@
 import { recieveUserInfo } from "@/apis/profile.api";
-import userStore from "@/zustand/userStore";
+import useUserStore from "@/zustand/userStore";
 import { QueryClient } from "@tanstack/react-query";
 
 const getUserInfoLoader = async (QueryClient: QueryClient) => {
@@ -14,7 +14,7 @@ const getUserInfoLoader = async (QueryClient: QueryClient) => {
       queryKey: ["userInfo"],
       queryFn: recieveUserInfo,
     });
-    userStore.getState().setUser(user);
+    useUserStore.getState().setUser(user);
     return user;
   } catch (error) {
     return null;

@@ -3,7 +3,7 @@ import styles from "./post.module.css";
 import CommunityPost from "@/components/CommunityPost";
 import LikeButton from "@/components/LikeButton/LikeButton";
 import { PostItem } from "@/types/post.type";
-import userStore from "@/zustand/userStore";
+import useUserStore from "@/zustand/userStore";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useMemo } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -16,7 +16,7 @@ interface PostProps {
 
 const Post = ({ post }: PostProps) => {
   const navigate = useNavigate();
-  const { user } = userStore();
+  const { user } = useUserStore();
   const { pathname } = useLocation();
   const { toast } = useToast();
   const qc = useQueryClient();

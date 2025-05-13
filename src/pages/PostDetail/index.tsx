@@ -9,7 +9,7 @@ import {
 import { useParams } from "react-router-dom";
 import Comment from "./components/Comment/Comment";
 import { useMemo } from "react";
-import userStore from "@/zustand/userStore";
+import useUserStore from "@/zustand/userStore";
 import LikeButton from "../../components/LikeButton/LikeButton";
 import Header from "@/components/Header";
 import { AxiosError } from "axios";
@@ -20,7 +20,7 @@ import { Helmet } from "react-helmet-async";
 const PostDetailPage = () => {
   const { toast } = useToast();
   const qc = useQueryClient();
-  const { user } = userStore();
+  const { user } = useUserStore();
   const { id: postId } = useParams();
   const { data: post } = useSuspenseQuery({
     queryKey: ["Post", Number(postId)],

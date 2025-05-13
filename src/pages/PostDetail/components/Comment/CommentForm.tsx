@@ -4,7 +4,7 @@ import { CommentFormFields } from "@/types/post.type";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { CommentSchema } from "@/consts/zodSchema";
-import userStore from "@/zustand/userStore";
+import useUserStore from "@/zustand/userStore";
 import useCommentMutation from "@/hooks/useCommentMutation";
 import { useCommentStore } from "@/zustand/commentStore";
 import { useEffect } from "react";
@@ -18,7 +18,7 @@ const CommentForm = ({ postId }: CommentFormProps) => {
   const { toast } = useToast();
   const { submitType, targetComment, initState, setResetForm } =
     useCommentStore();
-  const { user } = userStore();
+  const { user } = useUserStore();
   const { register, handleSubmit, setValue, resetField } =
     useForm<CommentFormFields>({
       defaultValues: {

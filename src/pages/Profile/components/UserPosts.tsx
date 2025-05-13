@@ -5,12 +5,12 @@ import { useState } from "react";
 
 import { useNavigate } from "react-router-dom";
 import { getLikePosts, getUserPosts } from "@/apis/post.api";
-import userStore from "@/zustand/userStore";
+import useUserStore from "@/zustand/userStore";
 import { useQuery } from "@tanstack/react-query";
 import { PostItem } from "@/types/post.type";
 
 const UserPosts = () => {
-  const { user } = userStore();
+  const { user } = useUserStore();
   const [currentPostsPage, setCurrentPostsPage] = useState<number>(1);
   const [currentLikePage, setCurrentLikePage] = useState<number>(1);
   const { data } = useQuery({

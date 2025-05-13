@@ -1,13 +1,13 @@
 import { create } from "zustand";
 import { UserType } from "@/types/user.type";
 
-interface UserStore {
+interface useUserStore {
   user: UserType | null;
   setUser: (user: Partial<UserType>) => void;
   clearUser: () => void;
 }
 
-const userStore = create<UserStore>((set) => ({
+const useuseUserStore = create<useUserStore>((set) => ({
   user: null,
   setUser: (user: Partial<UserType>) =>
     set((state) => ({
@@ -16,4 +16,4 @@ const userStore = create<UserStore>((set) => ({
   clearUser: () => set(() => ({ user: null })),
 }));
 
-export default userStore;
+export default useuseUserStore;

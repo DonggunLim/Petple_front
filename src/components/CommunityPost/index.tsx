@@ -5,7 +5,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { useMemo } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { deletePostById } from "@/apis/post.api";
-import userStore from "@/zustand/userStore";
+import useUserStore from "@/zustand/userStore";
 import ClockIcon from "@/assets/icons/clock.svg?react";
 import LikeIcon from "@/assets/icons/like.svg?react";
 import CommentIcon from "@/assets/icons/comment.svg?react";
@@ -67,7 +67,7 @@ const PostHeader = (
 ) => {
   const location = useLocation();
   const navigate = useNavigate();
-  const { user } = userStore();
+  const { user } = useUserStore();
   const { creator, tags, created_at, commentsCount, likesCount, postId } = data;
   const qc = useQueryClient();
 

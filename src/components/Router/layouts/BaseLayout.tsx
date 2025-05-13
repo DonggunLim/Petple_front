@@ -6,7 +6,7 @@ import HelmetMetaTags from "../../HelmetMetaTags";
 import { useEffect, useMemo } from "react";
 import { simpleLayoutPath } from "@/consts/simpleLayoutPath";
 
-import userStore from "@/zustand/userStore";
+import useUserStore from "@/zustand/userStore";
 import { useAlarmStore } from "@/zustand/alarmStore";
 import useToast from "@/components/UI/Toast/hooks/useToast";
 import { AlarmType } from "@/types/alarm.type";
@@ -19,7 +19,7 @@ const BaseLayout = () => {
     [currentPath]
   );
 
-  const { user } = userStore();
+  const { user } = useUserStore();
   const { addAlarm } = useAlarmStore();
   const { toast, removeToast } = useToast();
   const navigate = useNavigate();

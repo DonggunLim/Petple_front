@@ -1,4 +1,4 @@
-import userStore from "@/zustand/userStore";
+import useUserStore from "@/zustand/userStore";
 import style from "./avartar.module.css";
 import { FC } from "react";
 import { useNavigate, useParams } from "react-router-dom";
@@ -19,7 +19,7 @@ interface AvartarProps {
 
 const Avartar: FC<AvartarProps> = (props) => {
   const { onClick, className, alt, creator, image } = props;
-  const { user } = userStore();
+  const { user } = useUserStore();
   const { nickname } = useParams<string>();
   const navigate = useNavigate();
 

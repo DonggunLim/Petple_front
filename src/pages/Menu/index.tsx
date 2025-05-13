@@ -1,12 +1,14 @@
-import userStore from "@/zustand/userStore";
+import useUserStore from "@/zustand/userStore";
 import style from "./menu.module.css";
 import { useNavigate } from "react-router-dom";
 import { useMemo } from "react";
 import { Button } from "@/components";
 import { logout } from "@/apis/profile.api";
+import { useAlarmStore } from "@/zustand/alarmStore";
 
 const Menu = () => {
-  const { user, clearUser } = userStore();
+  const { user, clearUser } = useUserStore();
+  const { clearAlarm } = useAlarmStore();
   const isLoggined = useMemo(() => !!user, [user]);
   const navigate = useNavigate();
 
@@ -15,6 +17,7 @@ const Menu = () => {
       const response = await logout();
       if (response) {
         clearUser();
+        clearAlarm();
         navigate("/login");
       }
     } catch (error) {

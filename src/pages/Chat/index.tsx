@@ -2,7 +2,7 @@ import styles from "./chat.module.css";
 import ChatInput from "./components/ChatInput";
 import ChatList from "./components/ChatList";
 import useChatSocket from "./hooks/useChatSocket";
-import userStore from "@/zustand/userStore";
+import useUserStore from "@/zustand/userStore";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { useParams } from "react-router-dom";
 import { getPrevMessages } from "@/apis/messages.api";
@@ -11,7 +11,7 @@ import ChatHeader from "./components/ChatHeader";
 
 const ChatPage = () => {
   const { nickname: targetUserNickname } = useParams();
-  const { user: signinedUser } = userStore();
+  const { user: signinedUser } = useUserStore();
   const {
     data: { targetUser, chat },
   } = useSuspenseQuery({

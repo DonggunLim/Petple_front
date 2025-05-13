@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import userStore from "@/zustand/userStore";
+import useUserStore from "@/zustand/userStore";
 import { getWalks } from "@/apis/public.api";
 import styles from "./petWalkDetail.module.css";
 import { Button } from "@/components";
@@ -11,7 +11,7 @@ import Pagination from "@/components/UI/Pagination";
 import { Helmet } from "react-helmet-async";
 
 const PetWalkDetail = () => {
-  const { user } = userStore();
+  const { user } = useUserStore();
   const navigate = useNavigate();
   const { toast } = useToast();
 

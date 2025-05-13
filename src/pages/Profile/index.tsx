@@ -1,4 +1,4 @@
-import userStore from "@/zustand/userStore";
+import useUserStore from "@/zustand/userStore";
 import { Carousel } from "@/components";
 import style from "./profile.module.css";
 import { useNavigate } from "react-router-dom";
@@ -7,7 +7,7 @@ import UserProfileForm from "@/pages/Profile/components/UserProfileForm";
 import UserPosts from "./components/UserPosts";
 
 const Profile = () => {
-  const { user } = userStore();
+  const { user } = useUserStore();
 
   const navigate = useNavigate();
 

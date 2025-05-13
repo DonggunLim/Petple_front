@@ -1,10 +1,10 @@
 import useToast from "@/components/UI/Toast/hooks/useToast";
-import userStore from "@/zustand/userStore";
+import useUserStore from "@/zustand/userStore";
 import { FC, PropsWithChildren, useEffect } from "react";
 import { Navigate } from "react-router-dom";
 
 const ProtectedRoute: FC<PropsWithChildren> = ({ children }) => {
-  const { user } = userStore();
+  const { user } = useUserStore();
   const { toast } = useToast();
   useEffect(() => {
     if (!user?.id) {

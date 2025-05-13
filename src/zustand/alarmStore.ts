@@ -6,6 +6,7 @@ interface AlarmStore {
   addAlarm: (alarms: AlarmType[]) => void;
   deleteAlarm: (uid: number) => void;
   updateAlarm: (alarm: AlarmType) => void;
+  clearAlarm: () => void;
 }
 
 export const useAlarmStore = create<AlarmStore>((set) => ({
@@ -21,5 +22,9 @@ export const useAlarmStore = create<AlarmStore>((set) => ({
       alarmList: state.alarmList.map((item) =>
         item.id === alarm.id ? alarm : item
       ),
+    })),
+  clearAlarm: () =>
+    set(() => ({
+      alarmList: [],
     })),
 }));

@@ -6,7 +6,7 @@ import styles from "./petWalk.module.css";
 import Map from "@/components/Map";
 import { WalkData } from "@/types/petApi.type";
 import { postWalkData } from "@/apis/public.api";
-import userStore from "@/zustand/userStore";
+import useUserStore from "@/zustand/userStore";
 import useToast from "@/components/UI/Toast/hooks/useToast";
 
 const PetWalk = () => {
@@ -27,7 +27,7 @@ const PetWalk = () => {
   } | null>(null);
   const navigate = useNavigate();
 
-  const { user } = userStore();
+  const { user } = useUserStore();
   const { toast } = useToast();
 
   const mutation = useMutation({

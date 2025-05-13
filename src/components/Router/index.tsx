@@ -5,7 +5,7 @@ import Loading from "@/components/Loading";
 import getUserInfoLoader from "./loader/getUserInfo.loader";
 import { QueryClient } from "@tanstack/react-query";
 import BaseLayout from "./layouts/BaseLayout";
-import userStore from "@/zustand/userStore";
+import useUserStore from "@/zustand/userStore";
 
 const ErrorPage = lazy(() => import("@/pages/Error"));
 const HomePage = lazy(() => import("@/pages/Home"));
@@ -43,7 +43,7 @@ const router = createBrowserRouter([
     element: <BaseLayout />,
     errorElement: <ErrorPage />,
     loader: () => getUserInfoLoader(qc),
-    shouldRevalidate: () => (!!userStore.getState().user ? false : true),
+    shouldRevalidate: () => (!!useUserStore.getState().user ? false : true),
     children: [
       {
         index: true,

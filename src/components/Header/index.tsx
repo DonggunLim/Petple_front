@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import style from "./header.module.css";
-import userStore from "@/zustand/userStore";
+import useUserStore from "@/zustand/userStore";
 import { useQueryClient } from "@tanstack/react-query";
 import Avartar from "../UI/Avartar";
 import AlarmDropdown from "../UI/Dropdown/AlarmDropdown";
@@ -10,15 +10,16 @@ import { useEffect } from "react";
 
 const Header = () => {
   const navigate = useNavigate();
-  const { user, clearUser } = userStore();
+  const { user, clearUser } = useUserStore();
   const queryClient = useQueryClient();
-  const { addAlarm } = useAlarmStore();
+  const { addAlarm, clearAlarm } = useAlarmStore();
   const loginStatus = JSON.parse(
     localStorage.getItem("loginStatus") || "false"
   );
 
   const handleLogout = async () => {
     clearUser();
+    clearAlarm();
     queryClient.removeQueries({ queryKey: ["userInfo"] });
     localStorage.clear();
   };

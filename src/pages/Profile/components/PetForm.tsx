@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form";
 import style from "./petForm.module.css";
 import Button from "../../../components/UI/Button";
-import userStore from "@/zustand/userStore";
+import useUserStore from "@/zustand/userStore";
 import { ChangeEvent, FC, useRef, useState } from "react";
 import { imageUpload } from "@/utils/imageUpload";
 import { Pet } from "@/types/user.type";
@@ -37,7 +37,7 @@ const PetForm: FC<PetInfoProps> = (props) => {
     resolver: zodResolver(petSchema),
     mode: "onBlur",
   });
-  const { user, setUser } = userStore();
+  const { user, setUser } = useUserStore();
   const [previewImg, setPreviewImg] = useState<string>(image || "");
   const [file, setFile] = useState<File | null>(null);
   const [edit, setEdit] = useState<boolean>(false);

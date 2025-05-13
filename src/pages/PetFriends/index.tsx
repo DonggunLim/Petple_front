@@ -1,7 +1,7 @@
 import styles from "./petfriends.module.css";
 import { useEffect, useRef, useState } from "react";
 import useKakaoLoader from "@/components/Map/MapLoader";
-import userStore from "@/zustand/userStore";
+import useUserStore from "@/zustand/userStore";
 import { useQuery } from "@tanstack/react-query";
 import { getNearUsers } from "@/apis/profile.api";
 import { useNavigate } from "react-router-dom";
@@ -13,7 +13,7 @@ const PetFriendsPage = () => {
   const [selectedUser, setSelectedUser] = useState<UserType>();
   const navigate = useNavigate();
   const { isSuccess, cleanup } = useKakaoLoader();
-  const { user: signinedUser } = userStore();
+  const { user: signinedUser } = useUserStore();
   const { data: nearUsers } = useQuery({
     queryKey: ["locations", signinedUser?.id],
     queryFn: () =>

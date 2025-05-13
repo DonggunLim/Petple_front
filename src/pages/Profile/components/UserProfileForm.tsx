@@ -1,5 +1,5 @@
 import { useForm } from "react-hook-form";
-import userStore from "@/zustand/userStore";
+import useUserStore from "@/zustand/userStore";
 import { Avartar, Button } from "@/components";
 import { ChangeEvent, useEffect, useRef, useState } from "react";
 import style from "@/pages/Profile/profile.module.css";
@@ -12,7 +12,7 @@ import useToast from "../../../components/UI/Toast/hooks/useToast";
 import { AddressType } from "@/types/user.type";
 
 const UserProfileForm = () => {
-  const { user, setUser } = userStore();
+  const { user, setUser } = useUserStore();
   const { toast } = useToast();
 
   const {

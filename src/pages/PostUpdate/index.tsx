@@ -10,14 +10,14 @@ import { deletePostById, getPostById, updatePostById } from "@/apis/post.api";
 import PostForm from "@/components/PostForm";
 import { SubmitHandler } from "react-hook-form";
 import { useEffect } from "react";
-import userStore from "@/zustand/userStore";
+import useUserStore from "@/zustand/userStore";
 import { PostFormFields } from "@/types/post.type";
 import useToast from "@/components/UI/Toast/hooks/useToast";
 
 const PostUpdatePage = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
-  const { user } = userStore();
+  const { user } = useUserStore();
   const { id } = useParams();
   const qc = useQueryClient();
   const { data: post } = useSuspenseQuery({

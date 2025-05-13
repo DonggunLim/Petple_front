@@ -1,6 +1,6 @@
 import { ChangeEvent, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
-import userStore from "@/zustand/userStore";
+import useUserStore from "@/zustand/userStore";
 import style from "./createPetProfile.module.css";
 import { Button } from "@/components";
 import { useNavigate } from "react-router-dom";
@@ -20,7 +20,7 @@ const petDefaultValues = {
 
 type PetSchema = z.infer<typeof petSchema>;
 const CreatePetProfile = () => {
-  const { user, setUser } = userStore();
+  const { user, setUser } = useUserStore();
   const navigate = useNavigate();
   const [previewImg, setPreviewImg] = useState<string>("/images/dog.png");
   const [file, setFile] = useState<File | null>(null);
