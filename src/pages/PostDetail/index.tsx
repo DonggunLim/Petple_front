@@ -11,7 +11,6 @@ import Comment from "./components/Comment/Comment";
 import { useMemo } from "react";
 import useUserStore from "@/zustand/userStore";
 import LikeButton from "../../components/LikeButton/LikeButton";
-import Header from "@/components/Header";
 import { AxiosError } from "axios";
 import { updateLikes } from "@/apis/like.api";
 import useToast from "@/components/UI/Toast/hooks/useToast";
