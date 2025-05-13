@@ -77,12 +77,19 @@ const PetForm: FC<PetInfoProps> = (props) => {
     } catch (error) {
       console.error(error);
     }
-
-    const updatedPet = await updatePetInfo(user?.id!, petData, id!, imageUrl);
+    const updatedPet = await updatePetInfo(petData, id!, imageUrl);
 
     if (updatedPet) {
-      const updatePetList = user?.pets?.map((pet) =>
-        pet.id === updatedPet.id ? updatedPet : pet
+      const updatePetList = user?.pets.map((pet) =>
+        pet.id === updatedPet.id
+          ? {
+              ...pet,
+              name: petData.name,
+              age: petData.breed,
+              breed: petData.breed,
+              image: imageUrl,
+            }
+          : pet
       );
 
       if (updatePetList) {
@@ -98,20 +105,18 @@ const PetForm: FC<PetInfoProps> = (props) => {
   };
 
   const deletePetInfo = async () => {
+    if (!id) return;
     try {
-      const deletedPet = await deletePet(user?.id!, id!);
+      const deletedPet = await deletePet(id);
 
       if (deletedPet) {
-        const updateList = user?.pets?.filter((pet) => pet.id !== id);
-        if (updateList) {
-          setUser({ pets: updateList });
-          window.location.reload();
-        }
+        const updatedPets = user?.pets.filter((pet) => pet.id !== id);
+        setUser({ pets: updatedPets });
 
-        // toast({
-        //   type: "INFO",
-        //   description: "반려동물 프로필이 삭제되었습니다.",
-        // });
+        toast({
+          type: "INFO",
+          description: "반려동물 프로필이 삭제되었습니다.",
+        });
       }
     } catch (error) {
       console.error("반려동물 정보 삭제 실패", error);
@@ -129,7 +134,7 @@ const PetForm: FC<PetInfoProps> = (props) => {
     });
     setPreviewImg(image || "");
   };
-
+  console.log(edit);
   return (
     <div className={style.petForm_total_wrap}>
       <form onSubmit={handleSubmit(onSubmit)} className={style.form}>
