@@ -7,7 +7,7 @@ interface UserStore {
   clearUser: () => void;
 }
 
-const userAuthStore = create<UserStore>((set) => ({
+const userStore = create<UserStore>((set) => ({
   user: null,
   setUser: (user: Partial<UserType>) =>
     set((state) => ({
@@ -16,4 +16,4 @@ const userAuthStore = create<UserStore>((set) => ({
   clearUser: () => set(() => ({ user: null })),
 }));
 
-export default userAuthStore;
+export default userStore;

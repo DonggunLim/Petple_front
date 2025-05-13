@@ -10,7 +10,7 @@ const ProtectedRoute: FC<PropsWithChildren> = ({ children }) => {
     if (!user?.id) {
       toast({ type: "INFO", description: "로그인이 필요합니다." });
     }
-  }, []);
+  }, [user]);
 
   return !!user?.id ? children : <Navigate to="/login" replace={true} />;
 };
