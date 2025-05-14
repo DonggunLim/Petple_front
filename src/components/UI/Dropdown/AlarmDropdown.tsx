@@ -20,7 +20,7 @@ const AlarmDropdown = () => {
   const { toast } = useToast();
 
   const unreadAlarmCount = useMemo(
-    () => alarmList.filter((alarm) => !alarm.isRead).length,
+    () => alarmList.filter((alarm) => !alarm.is_read).length,
     [alarmList]
   );
   const sortedAlarmList = useMemo(
@@ -33,12 +33,12 @@ const AlarmDropdown = () => {
   );
 
   const handleAlarmClick = async (alarm: AlarmType) => {
-    if (alarm.isRead) {
+    if (alarm.is_read) {
       return;
     }
     try {
       await updateAlarmRead(alarm.id);
-      updateAlarmStore({ ...alarm, isRead: true });
+      updateAlarmStore({ ...alarm, is_read: true });
     } catch (error) {
       toast({ type: "ERROR", description: "알림 업데이트 실패하였습니다." });
     } finally {
@@ -78,7 +78,7 @@ const AlarmDropdown = () => {
             {sortedAlarmList.map((alarm) => (
               <Dropdown.Item
                 key={alarm.id}
-                className={`${styles.item} ${alarm.isRead && styles.read}`}
+                className={`${styles.item} ${alarm.is_read && styles.read}`}
                 onClick={() => {
                   handleAlarmClick(alarm);
                 }}
