@@ -33,10 +33,10 @@ const AlarmDropdown = () => {
   );
 
   const handleAlarmClick = async (alarm: AlarmType) => {
-    if (alarm.is_read) {
-      return;
-    }
     try {
+      if (alarm.is_read) {
+        return;
+      }
       await updateAlarmRead(alarm.id);
       updateAlarmStore({ ...alarm, is_read: true });
     } catch (error) {
